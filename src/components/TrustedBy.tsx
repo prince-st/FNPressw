@@ -138,16 +138,13 @@ export default function TrustedBy() {
         </div>
       </section>
 
-      {/* Recognition band — blue with navy corner curves */}
-      <div className="relative w-full overflow-hidden" style={{ background: "#0030F0" }}>
-        {/* Top-left and top-right navy corners curving inward */}
-        <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="w-full block" style={{ height: "120px" }} fill="#0d1a5e">
-          <path d="M0,0 L0,120 Q300,0 600,60 Q900,120 1200,0 L1200,0 Z" />
+      {/* Wave + recognition card centered over it */}
+      <div className="relative w-full" style={{ background: "#0d1a5e" }}>
+        <svg viewBox="0 0 1200 280" preserveAspectRatio="none" className="w-full block" style={{ height: "280px" }} fill="#0030F0">
+          <path d="M0,280 C300,0 900,0 1200,280 L1200,280 L0,280 Z" />
         </svg>
-
-        {/* White card */}
-        <div className="px-4 pb-12 -mt-4">
-          <div className="w-full max-w-3xl mx-auto rounded-2xl overflow-hidden shadow-xl" style={{ background: "#fff" }}>
+        <div className="absolute inset-0 flex items-center justify-center px-4" style={{ zIndex: 10 }}>
+          <div className="w-full max-w-3xl rounded-2xl overflow-hidden shadow-xl" style={{ background: "#fff" }}>
             <div className="flex flex-col md:flex-row items-stretch">
               {recognitions.map((rec, ri) => (
                 <div
