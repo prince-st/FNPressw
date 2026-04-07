@@ -1,8 +1,8 @@
 import { useState } from "react";
 import logoImg from "@/assets/logo.png";
-import link1 from "@/assets/link3.png";
-import link2 from "@/assets/t.png";
-import link3 from "@/assets/f.png";
+import link1 from "@/assets/s_1.png";
+import link2 from "@/assets/s_2.png";
+import link3 from "@/assets/s_3.png";
 import emailIcon from "@/assets/E_icon.png";
 import phoneIcon from "@/assets/P_icon.png";
 import locationIcon from "@/assets/L_icon.png";
