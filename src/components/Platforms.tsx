@@ -35,7 +35,7 @@ function PlatformCard({ icon, badge, title, description, features, isDark }: Pla
         background: isDark
           ? (hovered ? "#fff" : "#0030F0")
           : (hovered ? "#0030F0" : "#fff"),
-        borderColor: "transparent",
+        borderColor: "rgba(255,255,255,0.5)",
         color: isDark
           ? (hovered ? "#1a1a2e" : "#fff")
           : (hovered ? "#fff" : "#1a1a2e"),
