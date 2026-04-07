@@ -89,7 +89,7 @@ export default function Footer() {
                   className="h-12 w-auto object-contain mb-2"
                   style={{ filter: "brightness(0) invert(1)" }}
                 />
-                <span className="text-white font-bold text-xl">FN Press Wire</span>
+                {/* <span className="text-white font-bold text-xl">FN Press Wire</span> */}
               </Link>
               <p className="text-xs leading-relaxed mb-6" style={{ color: "#626D84" }}>
                 Transforming how brands distribute news, pitch the media, and manage public relations with industry-leading communication platforms.
