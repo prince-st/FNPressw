@@ -76,7 +76,7 @@ function PlatformCard({ icon, badge, title, description, features, isDark }: Pla
         </button>
         <button className="flex-1 py-2.5 px-5 rounded-xl font-semibold text-sm transition-all"
           style={{
-            background: "#fff",
+            background: "#681414ff",
             border: `1.5px solid ${isLight ? "#3366FF" : "#fff"}`,
             color: "#3366FF",
           }}>
