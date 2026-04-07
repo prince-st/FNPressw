@@ -26,14 +26,14 @@ export default function Hero() {
             <div className="flex flex-wrap items-center gap-4 mb-10">
               <button
                 className="flex items-center gap-2 px-7 py-3 text-sm font-semibold rounded-md transition-all"
-                style={{ background: "#0030F0", color: "#fff", border: "none" }}
+                style={{ background: "#fff", color: "#0030F0", border: "1.5px solid #0030F0" }}
                 onMouseEnter={e => {
-                  (e.currentTarget as HTMLButtonElement).style.background = "#fff";
-                  (e.currentTarget as HTMLButtonElement).style.color = "#0030F0";
-                }}
-                onMouseLeave={e => {
                   (e.currentTarget as HTMLButtonElement).style.background = "#0030F0";
                   (e.currentTarget as HTMLButtonElement).style.color = "#fff";
+                }}
+                onMouseLeave={e => {
+                  (e.currentTarget as HTMLButtonElement).style.background = "#fff";
+                  (e.currentTarget as HTMLButtonElement).style.color = "#0030F0";
                 }}
               >
                 Start Free Trial
