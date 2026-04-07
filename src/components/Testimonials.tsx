@@ -91,7 +91,7 @@ export default function Testimonials() {
                 className="rounded-lg px-4 py-3 border-l-4"
                 style={{
                   background: "rgba(51,102,255,0.08)",
-                  borderColor: "#3366FF"
+                  borderColor: "#0030F0"
                 }}
               >
                 <div className="text-[10px] font-semibold text-blue-400 uppercase tracking-wider mb-0.5">Key Result</div>
@@ -101,7 +101,7 @@ export default function Testimonials() {
               {/* Author */}
               <div className="flex items-center gap-3 pt-1">
                 <div
-                  className="w-9 h-9 rounded-full flex items-center justify-center text-[#3366FF] text-xs font-bold flex-shrink-0"
+                  className="w-9 h-9 rounded-full flex items-center justify-center text-[#0030F0] text-xs font-bold flex-shrink-0"
                   style={{ background: t.color }}
                 >
                   {t.initials}
@@ -109,7 +109,7 @@ export default function Testimonials() {
                 <div>
                   <div className="font-semibold text-gray-900 text-sm">{t.author}</div>
                   <div className="text-gray-400 text-xs">{t.role}</div>
-                  <div className="text-xs font-semibold" style={{ color: "#3366FF" }}>{t.company}</div>
+                  <div className="text-xs font-semibold" style={{ color: "#0030F0" }}>{t.company}</div>
                 </div>
               </div>
             </div>
@@ -124,7 +124,7 @@ export default function Testimonials() {
               key={m.label}
               className="text-center rounded-2xl p-4 sm:p-6 bg-white border border-gray-200 shadow-sm hover:shadow-md transition"
             >
-              <div className="text-2xl sm:text-3xl md:text-4xl font-bold mb-1 text-[#3366FF]">
+              <div className="text-2xl sm:text-3xl md:text-4xl font-bold mb-1 text-[#0030F0]">
                 {m.value}
               </div>
 

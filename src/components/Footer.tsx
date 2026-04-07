@@ -61,7 +61,7 @@ export default function Footer() {
               <button
                 type="submit"
                 className="px-6 py-3.5 text-sm font-semibold text-white rounded-2xl transition-all hover:opacity-90 whitespace-nowrap flex-shrink-0"
-                style={{ background: "#3366FF" }}
+                style={{ background: "#0030F0" }}
               >
                 Subscribe
               </button>

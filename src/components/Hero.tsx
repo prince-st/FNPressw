@@ -12,7 +12,7 @@ export default function Hero() {
             <h1 className="font-extrabold text-[#1a1a1a] leading-[1.1] mb-3"
               style={{ fontSize: "clamp(36px, 5vw, 64px)" }}>
               Communication made <br />
-              <span className="text-[#3366FF]">easier.</span>
+              <span className="text-[#0030F0]">easier.</span>
             </h1>
             <h2 className="font-bold text-[#1a1a1a] mb-5"
               style={{ fontSize: "clamp(18px, 2.5vw, 28px)" }}>
@@ -26,13 +26,13 @@ export default function Hero() {
             <div className="flex flex-wrap items-center gap-4 mb-10">
               <button
                 className="flex items-center gap-2 px-7 py-3 text-sm font-semibold rounded-md transition-all"
-                style={{ background: "#3366FF", color: "#fff", border: "none" }}
+                style={{ background: "#0030F0", color: "#fff", border: "none" }}
                 onMouseEnter={e => {
                   (e.currentTarget as HTMLButtonElement).style.background = "#fff";
-                  (e.currentTarget as HTMLButtonElement).style.color = "#3366FF";
+                  (e.currentTarget as HTMLButtonElement).style.color = "#0030F0";
                 }}
                 onMouseLeave={e => {
-                  (e.currentTarget as HTMLButtonElement).style.background = "#3366FF";
+                  (e.currentTarget as HTMLButtonElement).style.background = "#0030F0";
                   (e.currentTarget as HTMLButtonElement).style.color = "#fff";
                 }}
               >
@@ -46,7 +46,7 @@ export default function Hero() {
                 style={{ background: "transparent", color: "#1a1a1a", border: "none" }}
                 onMouseEnter={e => {
                   (e.currentTarget as HTMLButtonElement).style.background = "#fff";
-                  (e.currentTarget as HTMLButtonElement).style.color = "#3366FF";
+                  (e.currentTarget as HTMLButtonElement).style.color = "#0030F0";
                 }}
                 onMouseLeave={e => {
                   (e.currentTarget as HTMLButtonElement).style.background = "transparent";
@@ -54,7 +54,7 @@ export default function Hero() {
                 }}
               >
                 <div className="w-9 h-9  flex items-center justify-center ">
-                  <svg width="10" height="12" viewBox="0 0 10 12" fill="#3366FF">
+                  <svg width="10" height="12" viewBox="0 0 10 12" fill="#0030F0">
                     <path d="M9 6L1 11V1L9 6Z" />
                   </svg>
                 </div>

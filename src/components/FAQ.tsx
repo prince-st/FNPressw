@@ -47,7 +47,7 @@ export default function FAQ() {
                   className="w-4 h-4 flex-shrink-0 transition-transform duration-200"
                   style={{
                     transform: open === i ? "rotate(180deg)" : "rotate(0deg)",
-                    color: "#3366FF",
+                    color: "#0030F0",
                   }}
                   fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"
                 >
@@ -69,7 +69,7 @@ export default function FAQ() {
           // className="max-w-md sm:max-w-lg md:max-w-xl mx-auto rounded-2xl p-6 sm:p-8 text-center"  
 
           className="max-w-md sm:max-w-lg md:max-w-xl mx-auto rounded-2xl p-6 sm:p-8 text-center shadow-lg"
-          style={{ background: "linear-gradient(135deg, #3366FF 0%, #1a3fbf 100%)" }}
+          style={{ background: "linear-gradient(135deg, #0030F0 0%, #1a3fbf 100%)" }}
         >
           <h3 className="text-lg sm:text-xl font-bold text-white mb-2">
             Still Have Questions?
@@ -83,14 +83,14 @@ export default function FAQ() {
 
             {/* Primary Button */}
             <button
-              className="px-6 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 bg-white text-[#3366FF] border-2 border-white hover:bg-blue-50 hover:scale-105 active:scale-95 hover:shadow-md"
+              className="px-6 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 bg-white text-[#0030F0] border-2 border-white hover:bg-blue-50 hover:scale-105 active:scale-95 hover:shadow-md"
             >
               Contact Sales
             </button>
 
             {/* Secondary Button */}
             <button
-              className="px-6 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 border-2 border-white/60 text-white hover:bg-white hover:text-[#3366FF] hover:scale-105 active:scale-95 hover:shadow-md"
+              className="px-6 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 border-2 border-white/60 text-white hover:bg-white hover:text-[#0030F0] hover:scale-105 active:scale-95 hover:shadow-md"
             >
               Live Chat Support
             </button>

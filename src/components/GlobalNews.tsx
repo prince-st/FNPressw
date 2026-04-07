@@ -29,7 +29,7 @@ export default function GlobalNews() {
         <div className="text-center mb-12">
           <h2 className="font-bold text-gray-900 mb-4" style={{ fontSize: "clamp(28px, 4vw, 40px)" }}>
             Global News &{" "}
-            <span style={{ color: "#3366FF" }}>Filing Services</span>
+            <span style={{ color: "#0030F0" }}>Filing Services</span>
           </h2>
           <p className="max-w-2xl mx-auto leading-relaxed" style={{ fontSize: "16px", color: "#626D84" }}>
             Comprehensive news distribution and media services tailored to your needs
@@ -57,7 +57,7 @@ export default function GlobalNews() {
         <div className="text-center">
           <button
             className="px-8 py-3 rounded-lg text-white font-semibold text-sm transition-all hover:opacity-90"
-            style={{ background: "#3366FF" }}
+            style={{ background: "#0030F0" }}
           >
             Order Services
           </button>

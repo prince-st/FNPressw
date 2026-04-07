@@ -22,7 +22,7 @@ export default function Exchanges() {
         <div className="text-center mb-12">
           <h2 className="font-bold text-gray-900 mb-3" style={{ fontSize: "clamp(28px, 4vw, 40px)" }}>
             We Support all This is{" "}
-            <span style={{ color: "#3366FF" }}>Global Exchanges</span>
+            <span style={{ color: "#0030F0" }}>Global Exchanges</span>
           </h2>
           <p style={{ color: "#626D84", fontSize: "14px" }}>Contact us for company exchange news & support</p>
         </div>

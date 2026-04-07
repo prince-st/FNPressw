@@ -49,7 +49,7 @@ export default function Features() {
         <div className="text-center max-w-2xl mx-auto mb-14">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-4">
             Complete PR Solutions <br />
-            <span className="text-[#3366FF]">For Modern Brands</span>
+            <span className="text-[#0030F0]">For Modern Brands</span>
           </h2>
           <p className="text-gray-500 text-sm sm:text-base">
             Everything you need to distribute press releases, monitor coverage, and track performance.
@@ -75,12 +75,12 @@ export default function Features() {
               <ul className="flex flex-col gap-2">
                 {feature.bullets.map((b, i) => (
                   <li key={i} className="flex items-center gap-2 text-sm text-gray-600">
-                    <span className="w-2 h-2 bg-[#3366FF] rounded-full flex-shrink-0" />
+                    <span className="w-2 h-2 bg-[#0030F0] rounded-full flex-shrink-0" />
                     {b}
                   </li>
                 ))}
               </ul>
-              <a href="#" className="inline-flex items-center gap-1 text-[#3366FF] font-semibold text-sm mt-6 group-hover:gap-2 transition-all">
+              <a href="#" className="inline-flex items-center gap-1 text-[#0030F0] font-semibold text-sm mt-6 group-hover:gap-2 transition-all">
                 Learn More →
               </a>
             </div>
@@ -89,16 +89,16 @@ export default function Features() {
 
         {/* CTA Banner */}
         {/* <div className="mt-8 rounded-xl p-6 sm:p-8 text-center text-white"
-          style={{ background: "linear-gradient(135deg, #3366FF 0%, #1a3fbf 100%)" }}>
+          style={{ background: "linear-gradient(135deg, #0030F0 0%, #1a3fbf 100%)" }}>
           <h3 className="text-xl sm:text-3xl font-bold mb-3">Ready to Transform Your PR Strategy?</h3>
           <p className="text-blue-100 mb-7 max-w-xl mx-auto text-sm sm:text-base">
             Join thousands of companies already using our platform to amplify their media presence.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <button className="bg-white text-[#3366FF] px-7 py-3 rounded-lg font-semibold text-sm hover:bg-blue-50 transition">
+            <button className="bg-white text-[#0030F0] px-7 py-3 rounded-lg font-semibold text-sm hover:bg-blue-50 transition">
               Start Free Trial
             </button>
-            <button className="border border-white px-7 py-3 rounded-lg font-semibold text-sm hover:bg-white hover:text-[#3366FF] transition">
+            <button className="border border-white px-7 py-3 rounded-lg font-semibold text-sm hover:bg-white hover:text-[#0030F0] transition">
               Book a Demo
             </button>
           </div>
@@ -130,9 +130,9 @@ export default function Features() {
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
                   <button
                     className="px-6 py-3 rounded-lg font-semibold text-sm transition-all duration-300"
-                    style={{ background: "#fff", color: "#3366FF", border: "2px solid #fff" }}
-                    onMouseEnter={e => { const b = e.currentTarget; b.style.background = "#3366FF"; b.style.color = "#fff"; b.style.border = "2px solid #fff"; }}
-                    onMouseLeave={e => { const b = e.currentTarget; b.style.background = "#fff"; b.style.color = "#3366FF"; b.style.border = "2px solid #fff"; }}
+                    style={{ background: "#fff", color: "#0030F0", border: "2px solid #fff" }}
+                    onMouseEnter={e => { const b = e.currentTarget; b.style.background = "#0030F0"; b.style.color = "#fff"; b.style.border = "2px solid #fff"; }}
+                    onMouseLeave={e => { const b = e.currentTarget; b.style.background = "#fff"; b.style.color = "#0030F0"; b.style.border = "2px solid #fff"; }}
                   >
                     Start Free Trial
                   </button>
@@ -140,7 +140,7 @@ export default function Features() {
                   <button
                     className="px-6 py-3 rounded-lg font-semibold text-sm transition-all duration-300"
                     style={{ background: "transparent", color: "#fff", border: "2px solid rgba(255,255,255,0.6)" }}
-                    onMouseEnter={e => { const b = e.currentTarget; b.style.background = "#fff"; b.style.color = "#3366FF"; b.style.border = "2px solid #fff"; }}
+                    onMouseEnter={e => { const b = e.currentTarget; b.style.background = "#fff"; b.style.color = "#0030F0"; b.style.border = "2px solid #fff"; }}
                     onMouseLeave={e => { const b = e.currentTarget; b.style.background = "transparent"; b.style.color = "#fff"; b.style.border = "2px solid rgba(255,255,255,0.6)"; }}
                   >
                     Schedule Demo

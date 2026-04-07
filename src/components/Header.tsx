@@ -29,7 +29,7 @@ export default function Header() {
           <nav className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => (
               <Link key={link.label} href={link.href}
-                className="text-gray-600 hover:text-[#3366FF] font-medium text-sm transition-colors">
+                className="text-gray-600 hover:text-[#0030F0] font-medium text-sm transition-colors">
                 {link.label}
               </Link>
             ))}
@@ -37,7 +37,7 @@ export default function Header() {
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-5">
-            <a href="#" className="text-[#3366FF] font-semibold text-sm hover:underline">Sign In</a>
+            <a href="#" className="text-[#0030F0] font-semibold text-sm hover:underline">Sign In</a>
             <a href="#" className="fn-btn-primary px-6 py-2.5 text-sm flex items-center gap-2">
               <img src={headerBtnIcon} alt="" className="w-4 h-4 object-contain" />
               Get Started
@@ -64,12 +64,12 @@ export default function Header() {
             {navLinks.map((link) => (
               <Link key={link.label} href={link.href}
                 onClick={() => setMenuOpen(false)}
-                className="text-gray-700 font-medium text-sm px-2 py-1.5 hover:text-[#3366FF] transition-colors">
+                className="text-gray-700 font-medium text-sm px-2 py-1.5 hover:text-[#0030F0] transition-colors">
                 {link.label}
               </Link>
             ))}
             <div className="flex items-center gap-4 pt-2 border-t border-gray-100 mt-1">
-              <a href="#" className="text-[#3366FF] font-semibold text-sm">Sign In</a>
+              <a href="#" className="text-[#0030F0] font-semibold text-sm">Sign In</a>
               <a href="#" className="fn-btn-primary px-5 py-2 text-sm flex items-center gap-2">
                 <img src={headerBtnIcon} alt="" className="w-4 h-4 object-contain" />
                 Get Started

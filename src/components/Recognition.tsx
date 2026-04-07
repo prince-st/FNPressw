@@ -41,7 +41,7 @@ export default function Recognition() {
               <ul className="flex flex-col gap-3">
                 {rec.items.map((item, i) => (
                   <li key={i} className="flex items-center gap-2 text-gray-600 text-sm">
-                    <svg className="w-4 h-4 text-[#3366FF] flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 text-[#0030F0] flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
                     {item}
@@ -57,7 +57,7 @@ export default function Recognition() {
           {metrics.map((m) => (
             <div key={m.label}
               className="text-center rounded-2xl p-6 bg-blue-50 border border-blue-100">
-              <div className="text-3xl font-bold text-[#3366FF] mb-1">{m.value}</div>
+              <div className="text-3xl font-bold text-[#0030F0] mb-1">{m.value}</div>
               <div className="text-xs text-gray-500 font-medium">{m.label}</div>
             </div>
           ))}

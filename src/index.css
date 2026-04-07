@@ -104,7 +104,7 @@
 
 /* FN Press Wire specific styles */
 .fn-btn-primary {
-  background: linear-gradient(135deg, #3366FF 0%, #1a3fbf 100%);
+  background: linear-gradient(135deg, #0030F0 0%, #1a3fbf 100%);
   color: white;
   border-radius: 6px;
   padding: 10px 24px;
@@ -122,8 +122,8 @@
 
 .fn-btn-outline {
   background: transparent;
-  color: #3366FF;
-  border: 2px solid #3366FF;
+  color: #0030F0;
+  border: 2px solid #0030F0;
   border-radius: 6px;
   padding: 10px 24px;
   font-weight: 600;
@@ -137,7 +137,7 @@
 
 .fn-btn-white {
   background: white;
-  color: #3366FF;
+  color: #0030F0;
   border-radius: 6px;
   padding: 12px 28px;
   font-weight: 700;

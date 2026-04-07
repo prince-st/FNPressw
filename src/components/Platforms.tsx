@@ -33,8 +33,8 @@ function PlatformCard({ icon, badge, title, description, features, isDark }: Pla
       className="platform-card rounded-2xl p-7 flex flex-col gap-4 border hover:-translate-y-1 cursor-pointer"
       style={{
         background: isDark
-          ? (hovered ? "#fff" : "#3366FF")
-          : (hovered ? "#3366FF" : "#fff"),
+          ? (hovered ? "#fff" : "#0030F0")
+          : (hovered ? "#0030F0" : "#fff"),
         borderColor: "transparent",
         color: isDark
           ? (hovered ? "#1a1a2e" : "#fff")
@@ -49,7 +49,7 @@ function PlatformCard({ icon, badge, title, description, features, isDark }: Pla
           style={{ background: "#0030F0" }}>          <img src={icon} alt="" className="w-9 h-9 object-contain" />
         </div>
         <div>
-          <span className="text-[10px] font-bold uppercase tracking-widest" style={{ color: isLight ? "#3366FF" : "#93c5fd" }}>{badge}</span>
+          <span className="text-[10px] font-bold uppercase tracking-widest" style={{ color: isLight ? "#0030F0" : "#93c5fd" }}>{badge}</span>
           <h3 className="text-xl font-bold mt-0.5 leading-tight" style={{ color: isLight ? "#1a1a2e" : "#fff" }}>{title}</h3>
         </div>
       </div>
@@ -59,7 +59,7 @@ function PlatformCard({ icon, badge, title, description, features, isDark }: Pla
       <ul className="flex flex-col gap-2.5 mt-1">
         {features.map((f, i) => (
           <li key={i} className="flex items-center gap-2.5 text-sm">
-            <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: isLight ? "#3366FF" : "rgba(255,255,255,0.6)" }} />
+            <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: isLight ? "#0030F0" : "rgba(255,255,255,0.6)" }} />
             <span style={{ color: isLight ? "#374151" : "rgba(255,255,255,0.85)" }}>{f}</span>
           </li>
         ))}
@@ -68,8 +68,8 @@ function PlatformCard({ icon, badge, title, description, features, isDark }: Pla
       <div className="flex items-center gap-3 mt-4">
         <button className="flex-1 py-2.5 px-5 rounded-xl font-semibold text-sm transition-all"
           style={{
-            background: isLight ? "#3366FF" : "transparent",
-            border: `1.5px solid ${isLight ? "#3366FF" : "rgba(255,255,255,0.5)"}`,
+            background: isLight ? "#0030F0" : "transparent",
+            border: `1.5px solid ${isLight ? "#0030F0" : "rgba(255,255,255,0.5)"}`,
             color: "#fff",
           }}>
           Learn More →
@@ -77,8 +77,8 @@ function PlatformCard({ icon, badge, title, description, features, isDark }: Pla
         <button className="flex-1 py-2.5 px-5 rounded-xl font-semibold text-sm transition-all"
           style={{
             background: "#fff",
-            border: `1.5px solid ${isLight ? "#3366FF" : "#fff"}`,
-            color: "#3366FF",
+            border: `1.5px solid ${isLight ? "#0030F0" : "#fff"}`,
+            color: "#0030F0",
           }}>
           Free Trial
         </button>

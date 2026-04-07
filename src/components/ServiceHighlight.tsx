@@ -33,7 +33,7 @@ export default function ServiceHighlight() {
         {/* Section heading */}
         <div className="text-center mb-12">
           <h2 className="font-bold text-gray-900 mb-3" style={{ fontSize: "clamp(28px, 4vw, 40px)" }}>
-            Global <span style={{ color: "#3366FF" }}>Disclosure Services</span>
+            Global <span style={{ color: "#0030F0" }}>Disclosure Services</span>
           </h2>
           <p className="max-w-lg mx-auto leading-relaxed" style={{ fontSize: "16px", color: "#626D84" }}>
             Distribute your company materials directly to capital markets and comply with global market regulators.
