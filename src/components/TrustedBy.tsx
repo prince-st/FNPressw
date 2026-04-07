@@ -138,7 +138,7 @@ export default function TrustedBy() {
             className="w-full max-w-3xl mx-auto rounded-2xl mt-10 overflow-hidden"
             style={{ background: "rgba(255,255,255,0.97)" }}
           >
-            <div className="flex flex-col md:flex-row ">
+            {/* <div className="flex flex-col md:flex-row ">
               {recognitions.map((rec, ri) => (
                 <div
                   key={rec.title}
@@ -163,6 +163,7 @@ export default function TrustedBy() {
                 </div>
               ))}
             </div>
+             */}
           </div>
 
         </div>
