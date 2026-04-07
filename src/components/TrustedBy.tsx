@@ -138,18 +138,17 @@ export default function TrustedBy() {
             className="w-full max-w-3xl mx-auto rounded-2xl mt-10 overflow-hidden"
             style={{ background: "rgba(255,255,255,0.97)" }}
           >
-            {/* <div className="flex flex-col md:flex-row ">
+            <div className="flex flex-col md:flex-row">
               {recognitions.map((rec, ri) => (
                 <div
                   key={rec.title}
-                  className="flex-1 flex flex-col items-center justify-center p-8 text-center"
+                  className="flex-1 flex flex-col p-8"
                   style={{
                     borderRight: ri === 0 ? "1px solid #e8ecf4" : "none",
-                    borderBottom: ri === 0 ? "1px solid #e8ecf4" : "none",
                   }}
                 >
-                  <h4 className="font-bold text-gray-900 text-base mb-5 w-full text-left">{rec.title}</h4>
-                  <ul className="flex flex-col gap-3 w-full">
+                  <h4 className="font-bold text-gray-900 text-base mb-5">{rec.title}</h4>
+                  <ul className="flex flex-col gap-3">
                     {rec.items.map((item, idx) => (
                       <li key={idx} className="flex items-center gap-3 text-gray-700 text-sm">
                         <span
@@ -163,7 +162,6 @@ export default function TrustedBy() {
                 </div>
               ))}
             </div>
-             */}
           </div>
 
         </div>
