@@ -138,16 +138,16 @@ export default function TrustedBy() {
         </div>
       </section>
 
-      {/* Wave + recognition card centered over it */}
+      {/* Recognition band — blue with navy corner curves */}
       <div className="relative w-full overflow-hidden" style={{ background: "#0030F0" }}>
-        {/* Top wave — navy curves down from top corners */}
+        {/* Top-left and top-right navy corners curving inward */}
         <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="w-full block" style={{ height: "120px" }} fill="#0d1a5e">
-          <path d="M0,0 L0,80 C300,160 900,160 1200,80 L1200,0 Z" />
+          <path d="M0,0 L0,120 Q300,0 600,60 Q900,120 1200,0 L1200,0 Z" />
         </svg>
 
-        {/* Card centered in blue area */}
-        <div className="flex items-center justify-center px-4 py-10">
-          <div className="w-full max-w-3xl rounded-2xl overflow-hidden shadow-xl" style={{ background: "#fff" }}>
+        {/* White card */}
+        <div className="px-4 pb-12 -mt-4">
+          <div className="w-full max-w-3xl mx-auto rounded-2xl overflow-hidden shadow-xl" style={{ background: "#fff" }}>
             <div className="flex flex-col md:flex-row items-stretch">
               {recognitions.map((rec, ri) => (
                 <div
@@ -172,11 +172,6 @@ export default function TrustedBy() {
             </div>
           </div>
         </div>
-
-        {/* Bottom wave — blue curves up into next section */}
-        <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="w-full block" style={{ height: "120px" }} fill="#0d1a5e">
-          <path d="M0,120 L0,40 C300,-40 900,-40 1200,40 L1200,120 Z" />
-        </svg>
       </div>
 
 
