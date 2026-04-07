@@ -8,7 +8,7 @@ export default function Hero() {
       <div className="fn-container relative z-10">
         <div className="flex flex-col lg:flex-row items-center gap-8">
           {/* Left: Text */}
-          <div className="flex-1 text-left max-w-xl pb-16 lg:pb-24">
+          <div className="flex-1 text-left max-w-xl pb-16 lg:pb-24 order-2 lg:order-1">
             <h1 className="font-extrabold text-[#1a1a1a] leading-[1.1] mb-3"
               style={{ fontSize: "clamp(36px, 5vw, 64px)" }}>
               Communication made <br />
@@ -79,7 +79,7 @@ export default function Hero() {
           </div>
 
           {/* Right: Hero Image */}
-          <div className="flex-1 flex justify-center lg:justify-end">
+          <div className="flex-1 flex justify-center lg:justify-end order-1 lg:order-2">
             <img
               src={heroImage}
               alt="Person using laptop"
