@@ -53,7 +53,7 @@ export default function Hero() {
                   (e.currentTarget as HTMLButtonElement).style.color = "#1a1a1a";
                 }}
               >
-                <div className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center shadow-sm">
+                <div className="w-9 h-9  bg-gray-100 flex items-center justify-center shadow-sm">
                   <svg width="10" height="12" viewBox="0 0 10 12" fill="#3366FF">
                     <path d="M9 6L1 11V1L9 6Z" />
                   </svg>
