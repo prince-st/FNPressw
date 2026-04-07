@@ -124,7 +124,6 @@ export default function TrustedBy() {
             {stats.map((stat) => (
               <div
                 key={stat.label}
-                // className="text-center rounded-2xl py-8 px-6">
                 className="text-center py-6 px-4 ">
                 <div className="text-4xl md:text-5xl font-bold text-white mb-1">{stat.value}</div>
                 <div className="text-white font-semibold text-sm mb-1">{stat.label}</div>
@@ -134,18 +133,24 @@ export default function TrustedBy() {
           </div>
 
           {/* Industry Recognition card — full width, centered */}
-          <div
-            className="w-full max-w-3xl mx-auto rounded-2xl mt-10 mb-16 overflow-hidden"
-            style={{ background: "rgba(255,255,255,0.97)" }}
-          >
+          <div className="h-20" /> {/* spacer so card has room below stats */}
+
+        </div>
+      </section>
+
+      {/* Wave + recognition card centered over it */}
+      <div className="relative w-full" style={{ background: "#0d1a5e" }}>
+        <svg viewBox="0 0 1200 160" preserveAspectRatio="none" className="w-full block" style={{ height: "160px" }} fill="#0030F0">
+          <path d="M0,160 C300,0 900,0 1200,160 L1200,160 L0,160 Z" />
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center px-4" style={{ zIndex: 10 }}>
+          <div className="w-full max-w-3xl rounded-2xl overflow-hidden shadow-xl" style={{ background: "#fff" }}>
             <div className="flex flex-col md:flex-row items-stretch">
               {recognitions.map((rec, ri) => (
                 <div
                   key={rec.title}
                   className="flex-1 flex flex-col justify-center p-8"
-                  style={{
-                    borderRight: ri === 0 ? "1px solid #e8ecf4" : "none",
-                  }}
+                  style={{ borderRight: ri === 0 ? "1px solid #e8ecf4" : "none" }}
                 >
                   <h4 className="font-bold text-gray-900 text-base mb-5">{rec.title}</h4>
                   <ul className="flex flex-col gap-3">
@@ -163,15 +168,7 @@ export default function TrustedBy() {
               ))}
             </div>
           </div>
-
         </div>
-      </section>
-
-      {/* Bottom wave — transition from navy to blue */}
-      <div className="w-full leading-[0]" style={{ background: "#0d1a5e" }}>
-        <svg viewBox="0 0 1200 80" preserveAspectRatio="none" className="w-full block" style={{ height: "80px" }} fill="#0030F0">
-          <path d="M0,80 C300,0 900,0 1200,80 L1200,80 L0,80 Z" />
-        </svg>
       </div>
 
 
