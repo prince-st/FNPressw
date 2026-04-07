@@ -140,8 +140,8 @@ export default function TrustedBy() {
 
       {/* Wave + recognition card centered over it */}
       <div className="relative w-full" style={{ background: "#0d1a5e" }}>
-        <svg viewBox="0 0 1200 160" preserveAspectRatio="none" className="w-full block" style={{ height: "160px" }} fill="#0030F0">
-          <path d="M0,160 C300,0 900,0 1200,160 L1200,160 L0,160 Z" />
+        <svg viewBox="0 0 1200 280" preserveAspectRatio="none" className="w-full block" style={{ height: "280px" }} fill="#0030F0">
+          <path d="M0,280 C300,0 900,0 1200,280 L1200,280 L0,280 Z" />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center px-4" style={{ zIndex: 10 }}>
           <div className="w-full max-w-3xl rounded-2xl overflow-hidden shadow-xl" style={{ background: "#fff" }}>
