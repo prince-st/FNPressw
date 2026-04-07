@@ -135,7 +135,7 @@ export default function TrustedBy() {
 
           {/* Industry Recognition card — full width, centered */}
           <div
-            className="w-full max-w-3xl mx-auto rounded-2xl mt-10 overflow-hidden"
+            className="w-full max-w-3xl mx-auto rounded-2xl mt-10 mb-16 overflow-hidden"
             style={{ background: "rgba(255,255,255,0.97)" }}
           >
             <div className="flex flex-col md:flex-row items-stretch">
@@ -145,7 +145,6 @@ export default function TrustedBy() {
                   className="flex-1 flex flex-col justify-center p-8"
                   style={{
                     borderRight: ri === 0 ? "1px solid #e8ecf4" : "none",
-                    borderBottom: ri === 0 ? "1px solid #e8ecf4" : "none",
                   }}
                 >
                   <h4 className="font-bold text-gray-900 text-base mb-5">{rec.title}</h4>
