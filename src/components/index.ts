@@ -1,0 +1,19 @@
+
+export { default as AboutHero } from './AboutHero';
+export { default as Exchanges } from './Exchanges';
+export { default as FAQ } from './FAQ';
+export { default as Features } from './Features';
+export { default as Footer } from './Footer';
+export { default as Header } from './Header';
+export { default as Hero } from './Hero';
+export { default as NewsNetworks } from './NewsNetworks';
+export { default as Newsletter } from './Newsletter';
+export { default as Platforms } from './Platforms';
+export { default as Recognition } from './Recognition';
+export { default as Testimonials } from './Testimonials';
+export { default as TrustedBy } from './TrustedBy';
+export { default as MarketingSection } from './MarketingSection';
+export { default as MarketingHero } from './MarketingHero';
+export { default as PremiumNews } from './PremiumNews';
+export { default as OrderServicesForm } from './OrderServicesForm';
+export { default as ContactForm } from './ContactForm';
