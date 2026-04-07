@@ -20,7 +20,9 @@ export default function Header() {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <img src={logoImg} alt="FN Press Wire" className="h-8 md:h-10 w-auto object-contain" />
+            <Link href="/">
+              <img src={logoImg} alt="FN Press Wire" className="h-8 md:h-10 w-auto object-contain cursor-pointer" />
+            </Link>
           </div>
 
           {/* Desktop Nav */}

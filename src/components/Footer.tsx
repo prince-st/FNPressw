@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "wouter";
 import logoImg from "@/assets/logo.png";
 import link1 from "@/assets/s_1.png";
 import link2 from "@/assets/s_2.png";
@@ -81,7 +82,7 @@ export default function Footer() {
 
             {/* Brand column */}
             <div className="lg:col-span-1">
-              <div className="flex flex-col items-start mb-4">
+              <Link href="/" className="flex flex-col items-start mb-4">
                 <img
                   src={logoImg}
                   alt="FN Press Wire"
@@ -89,7 +90,7 @@ export default function Footer() {
                   style={{ filter: "brightness(0) invert(1)" }}
                 />
                 <span className="text-white font-bold text-xl">FN Press Wire</span>
-              </div>
+              </Link>
               <p className="text-xs leading-relaxed mb-6" style={{ color: "#626D84" }}>
                 Transforming how brands distribute news, pitch the media, and manage public relations with industry-leading communication platforms.
               </p>
