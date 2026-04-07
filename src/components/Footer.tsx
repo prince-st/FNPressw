@@ -5,7 +5,7 @@ import link2 from "@/assets/t.png";
 import link3 from "@/assets/f.png";
 import emailIcon from "@/assets/E_icon.png";
 import phoneIcon from "@/assets/P_icon.png";
-import locationIcon from "@/assets/i.png";
+import locationIcon from "@/assets/L_icon.png";
 import newShape1 from "@/assets/new_shape_1.png";
 
 const footerLinks = {
