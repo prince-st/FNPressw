@@ -79,7 +79,8 @@ function PlatformCard({ icon, badge, title, description, features, learnMoreText
 }
 
 export default function Platforms() {
-  const [sectionTitle, setSectionTitle] = useState("Two Powerful Platforms, One Complete Solution");
+  const [sectionTitle, setSectionTitle] = useState("Two Powerful Platforms");
+  const [sectionTitle2, setSectionTitle2] = useState("One Complete Solution");
   const [sectionSubtitle, setSectionSubtitle] = useState("Whether you're managing media relations or investor communications, our specialized platforms deliver the tools you need to succeed.");
   const [platforms, setPlatforms] = useState<Platform[]>([]);
   const [stats, setStats] = useState<Stat[]>(FALLBACK_STATS);
@@ -91,7 +92,12 @@ export default function Platforms() {
         const acf = json?.acf;
         if (!acf) return;
 
-        if (acf.section_title) setSectionTitle(acf.section_title);
+        if (acf.two_powerful_first || acf.one_complete_solution_second) {
+          if (acf.two_powerful_first) setSectionTitle(acf.two_powerful_first);
+          if (acf.one_complete_solution_second) setSectionTitle2(acf.one_complete_solution_second);
+        } else if (acf.section_title) {
+          setSectionTitle(acf.section_title);
+        }
         if (acf.section_subtitle) setSectionSubtitle(acf.section_subtitle);
 
         // Platforms — acf_format=standard returns image URLs directly
@@ -164,8 +170,9 @@ export default function Platforms() {
     <section className="relative bg-[#0030F0] overflow-hidden w-full">
       <div className="fn-container relative z-10 py-16 md:py-24 mb-8 md:mb-16">
         <div className="text-center mb-14 max-w-3xl mx-auto">
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-5 leading-tight">{sectionTitle}</h2>
-          <p className="text-blue-100 text-base md:text-lg leading-relaxed max-w-2xl mx-auto">{sectionSubtitle}</p>
+          <h2 className="text-3xl md:text-5xl font-bold text-white mb-5 leading-tight">
+            {sectionTitle}<br className="hidden sm:block" /> {sectionTitle2}
+          </h2>          <p className="text-blue-100 text-base md:text-lg leading-relaxed max-w-2xl mx-auto">{sectionSubtitle}</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-20">
