@@ -82,7 +82,7 @@ export default function FAQ() {
         {/* Accordion */}
         <div className="  justify-center mx-auto flex flex-col gap-3 mb-10">
           {faqs.map((faq, i) => (
-            <div key={i} className=" max-w-3xl justify-center bg-white rounded-xl overflow-hidden"
+            <div key={i} className=" max-w-3xl justify-center mx-auto bg-white rounded-xl overflow-hidden"
               style={{ border: "1px solid #e8ecf4", boxShadow: "0 1px 4px rgba(0,0,0,0.05)" }}>
               <button
                 className="w-full flex items-center justify-between px-5 py-4 text-left transition-colors hover:bg-gray-50"
