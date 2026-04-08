@@ -75,7 +75,8 @@ export default function Features() {
         if (!acf) return;
 
         // Section header — field names from ACF group "Home - PR Solutions Section"
-        if (acf.section_title) setSectionTitle(acf.section_title);
+        if (acf.complete_pr_solutions) setSectionTitle(acf.complete_pr_solutions);
+        else if (acf.section_title) setSectionTitle(acf.section_title);
         if (acf.section_title_color) setSectionTitleColor(acf.section_title_color);
         if (acf.section_subtitle) setSectionSubtitle(acf.section_subtitle);
 
