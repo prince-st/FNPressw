@@ -61,8 +61,8 @@ export default function FAQ() {
         {/* Header */}
         <div className="text-center mb-10">
           {faqImage && (
-            <div className="w-20 h-20 rounded-2xl bg-blue-50 flex items-center justify-center mx-auto mb-4">
-              <img src={faqImage} alt="FAQ" className="w-8 h-8 object-contain" />
+            <div className="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center mx-auto mb-4">
+              <img src={faqImage} alt="FAQ" className="w-16 h-16 object-contain" />
             </div>
           )}
           {!faqImage && (
