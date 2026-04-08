@@ -5,33 +5,35 @@ import headerBtnIcon from "@/assets/Header_btn.png";
 
 const WP_API = "https://dev-fnpresswire.pantheonsite.io/wp-json/wp/v2";
 
-const fallbackNavLinks = [
-  { label: "Platforms", href: "#platforms" },
-  { label: "Solutions", href: "#solutions" },
-  { label: "Partners", href: "#partners" },
-  { label: "Testimonials", href: "#testimonials" },
-  { label: "Pricing", href: "#pricing" },
-];
-
 interface NavLink { label: string; href: string; }
 
-async function fetchMediaUrl(id: number): Promise<string | null> {
-  try {
-    const r = await fetch(`${WP_API}/media/${id}`);
-    const j = await r.json();
-    return j?.source_url || null;
-  } catch { return null; }
-}
+const FALLBACK: {
+  navLinks: NavLink[];
+  signInLabel: string;
+  signInUrl: string;
+  ctaLabel: string;
+  ctaUrl: string;
+  logoUrl: string;
+  ctaIcon: string;
+} = {
+  navLinks: [
+    { label: "Platforms", href: "#platforms" },
+    { label: "Solutions", href: "#solutions" },
+    { label: "Partners", href: "#partners" },
+    { label: "Testimonials", href: "#testimonials" },
+    { label: "Pricing", href: "#pricing" },
+  ],
+  signInLabel: "Sign In",
+  signInUrl: "/Contact",
+  ctaLabel: "Get Started",
+  ctaUrl: "#",
+  logoUrl: logoImg,
+  ctaIcon: headerBtnIcon,
+};
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [navLinks, setNavLinks] = useState<NavLink[]>(fallbackNavLinks);
-  const [signInLabel, setSignInLabel] = useState("Sign In");
-  const [signInUrl, setSignInUrl] = useState("/Contact");
-  const [ctaLabel, setCtaLabel] = useState("Get Started");
-  const [ctaUrl, setCtaUrl] = useState("#");
-  const [logoUrl, setLogoUrl] = useState(logoImg);
-  const [ctaIcon, setCtaIcon] = useState(headerBtnIcon);
+  const [hd, setHd] = useState(FALLBACK);
 
   useEffect(() => {
     fetch(`${WP_API}/pages/14`)
@@ -40,49 +42,56 @@ export default function Header() {
         const acf = json?.acf;
         if (!acf) return;
 
-        // Nav links — repeater uses "heading" and "link"
-        if (Array.isArray(acf.menu)) {
-          setNavLinks(acf.menu.map((n: any) => ({ label: n.heading, href: n.link || "#" })));
-        }
+        const navLinks: NavLink[] = Array.isArray(acf.menu)
+          ? acf.menu.map((n: any) => ({ label: n.heading || "", href: n.link || "#" }))
+          : FALLBACK.navLinks;
 
-        setSignInLabel(acf.signin_text || "Sign In");
-        setSignInUrl(acf.signin_link || "/Contact");
-        setCtaLabel(acf.cta_text || "Get Started");
-        setCtaUrl(acf.cta_link || "#");
-
-        // Logo — ACF returns media ID
+        // logo is a media ID (number)
+        let logoUrl = FALLBACK.logoUrl;
         if (typeof acf.logo === "number") {
-          const url = await fetchMediaUrl(acf.logo);
-          if (url) setLogoUrl(url);
-        } else if (acf.logo?.url) {
-          setLogoUrl(acf.logo.url);
+          try {
+            const m = await fetch(`${WP_API}/media/${acf.logo}`).then(r => r.json());
+            if (m?.source_url) logoUrl = m.source_url;
+          } catch {}
         }
 
-        // CTA icon — ACF returns media ID
+        // cta_button_icon is a media ID (number)
+        let ctaIcon = FALLBACK.ctaIcon;
         if (typeof acf.cta_button_icon === "number") {
-          const url = await fetchMediaUrl(acf.cta_button_icon);
-          if (url) setCtaIcon(url);
-        } else if (acf.cta_button_icon?.url) {
-          setCtaIcon(acf.cta_button_icon.url);
+          try {
+            const m = await fetch(`${WP_API}/media/${acf.cta_button_icon}`).then(r => r.json());
+            if (m?.source_url) ctaIcon = m.source_url;
+          } catch {}
         }
+
+        setHd({
+          navLinks,
+          signInLabel: acf.signin_text || FALLBACK.signInLabel,
+          signInUrl: acf.signin_link || FALLBACK.signInUrl,
+          ctaLabel: acf.cta_text || FALLBACK.ctaLabel,
+          ctaUrl: acf.cta_link || FALLBACK.ctaUrl,
+          logoUrl,
+          ctaIcon,
+        });
       })
-      .catch(() => {/* keep fallback */});
+      .catch((err) => console.error("Header API error:", err));
   }, []);
 
   return (
     <header className="w-full bg-white sticky top-0 z-50 border-b border-gray-100 shadow-sm">
       <div className="fn-container">
         <div className="flex items-center justify-between h-16 md:h-20">
+
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/">
-              <img src={logoUrl} alt="FN Press Wire" className="h-8 md:h-10 w-auto object-contain cursor-pointer" />
+              <img src={hd.logoUrl} alt="FN Press Wire" className="h-8 md:h-10 w-auto object-contain cursor-pointer" />
             </Link>
           </div>
 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) => (
+            {hd.navLinks.map((link) => (
               <Link key={link.label} href={link.href}
                 className="text-gray-600 hover:text-[#0030F0] font-medium text-sm transition-colors">
                 {link.label}
@@ -92,12 +101,12 @@ export default function Header() {
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-5">
-            <Link href={signInUrl} className="text-[#0030F0] font-semibold text-sm hover:underline">
-              {signInLabel}
+            <Link href={hd.signInUrl} className="text-[#0030F0] font-semibold text-sm hover:underline">
+              {hd.signInLabel}
             </Link>
-            <a href={ctaUrl} className="fn-btn-primary px-6 py-2.5 text-sm flex items-center gap-2">
-              <img src={ctaIcon} alt="" className="w-4 h-4 object-contain" />
-              {ctaLabel}
+            <a href={hd.ctaUrl} className="fn-btn-primary px-6 py-2.5 text-sm flex items-center gap-2">
+              <img src={hd.ctaIcon} alt="" className="w-4 h-4 object-contain" />
+              {hd.ctaLabel}
             </a>
           </div>
 
@@ -118,7 +127,7 @@ export default function Header() {
         {/* Mobile Menu */}
         {menuOpen && (
           <div className="lg:hidden border-t border-gray-100 py-4 flex flex-col gap-3">
-            {navLinks.map((link) => (
+            {hd.navLinks.map((link) => (
               <Link key={link.label} href={link.href}
                 onClick={() => setMenuOpen(false)}
                 className="text-gray-700 font-medium text-sm px-2 py-1.5 hover:text-[#0030F0] transition-colors">
@@ -126,12 +135,12 @@ export default function Header() {
               </Link>
             ))}
             <div className="flex items-center gap-4 pt-2 border-t border-gray-100 mt-1">
-              <Link href={signInUrl} className="text-[#0030F0] font-semibold text-sm">
-                {signInLabel}
+              <Link href={hd.signInUrl} className="text-[#0030F0] font-semibold text-sm">
+                {hd.signInLabel}
               </Link>
-              <a href={ctaUrl} className="fn-btn-primary px-5 py-2 text-sm flex items-center gap-2">
-                <img src={ctaIcon} alt="" className="w-4 h-4 object-contain" />
-                {ctaLabel}
+              <a href={hd.ctaUrl} className="fn-btn-primary px-5 py-2 text-sm flex items-center gap-2">
+                <img src={hd.ctaIcon} alt="" className="w-4 h-4 object-contain" />
+                {hd.ctaLabel}
               </a>
             </div>
           </div>
