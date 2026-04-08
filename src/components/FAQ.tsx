@@ -99,7 +99,9 @@ export default function FAQ() {
         </div>
 
         {/* Still Have Questions CTA */}
-        <div className="max-w-md sm:max-w-lg md:max-w-xl mx-auto rounded-2xl p-6 sm:p-8 text-center shadow-lg"
+        <div 
+        // className="max-w-md sm:max-w-lg md:max-w-xl mx-auto rounded-2xl p-6 sm:p-8 text-center shadow-lg"
+        className="max-w-md sm:max-w-lg md:max-w-xl mx-auto rounded-2xl p-6 sm:p-8 text-center shadow-lg bg-white/80 backdrop-blur-md"
           style={{ background: "linear-gradient(135deg, #0030F0 0%, #1a3fbf 100%)" }}>
           <h3 className="text-lg sm:text-xl font-bold text-white mb-2">{stillTitle}</h3>
           <p className="text-blue-200 text-sm sm:text-base mb-6 max-w-md mx-auto">{stillDesc}</p>
