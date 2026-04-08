@@ -25,6 +25,8 @@ interface HeaderData {
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [logoUrl, setLogoUrl] = useState<string>(logoImg);
+  const [ctaIcon, setCtaIcon] = useState<string>(headerBtnIcon);
   const [data, setData] = useState<HeaderData>({
     navLinks: fallbackNavLinks,
     signInLabel: "Sign In",
@@ -40,14 +42,27 @@ export default function Header() {
         const acf = json?.acf;
         if (!acf) return;
         setData({
-          navLinks: Array.isArray(acf.nav_links)
-            ? acf.nav_links.map((n: any) => ({ label: n.label, href: n.href }))
+          // ACF repeater field: "menu", sub-fields: label + href
+          navLinks: Array.isArray(acf.menu)
+            ? acf.menu.map((n: any) => ({ label: n.label, href: n.href }))
             : fallbackNavLinks,
-          signInLabel: acf.sign_in_label || "Sign In",
-          signInUrl: acf.sign_in_url || "/Contact",
-          ctaLabel: acf.cta_label || "Get Started",
-          ctaUrl: acf.cta_url || "#",
+          signInLabel: acf.signin_text || "Sign In",
+          signInUrl: acf.signin_link || "/Contact",
+          ctaLabel: acf.cta_text || "Get Started",
+          ctaUrl: acf.cta_link || "#",
         });
+
+        // Dynamic logo from ACF image field
+        if (acf.logo?.url) {
+          setLogoUrl(acf.logo.url);
+        } else if (acf.header_logo_url) {
+          setLogoUrl(acf.header_logo_url);
+        }
+
+        // Dynamic CTA button icon
+        if (acf.cta_button_icon?.url) {
+          setCtaIcon(acf.cta_button_icon.url);
+        }
       })
       .catch(() => {/* keep fallback */});
   }, []);
@@ -59,7 +74,7 @@ export default function Header() {
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/">
-              <img src={logoImg} alt="FN Press Wire" className="h-8 md:h-10 w-auto object-contain cursor-pointer" />
+              <img src={logoUrl} alt="FN Press Wire" className="h-8 md:h-10 w-auto object-contain cursor-pointer" />
             </Link>
           </div>
 
@@ -79,7 +94,7 @@ export default function Header() {
               {data.signInLabel}
             </Link>
             <a href={data.ctaUrl} className="fn-btn-primary px-6 py-2.5 text-sm flex items-center gap-2">
-              <img src={headerBtnIcon} alt="" className="w-4 h-4 object-contain" />
+              <img src={ctaIcon} alt="" className="w-4 h-4 object-contain" />
               {data.ctaLabel}
             </a>
           </div>
@@ -113,7 +128,7 @@ export default function Header() {
                 {data.signInLabel}
               </Link>
               <a href={data.ctaUrl} className="fn-btn-primary px-5 py-2 text-sm flex items-center gap-2">
-                <img src={headerBtnIcon} alt="" className="w-4 h-4 object-contain" />
+                <img src={ctaIcon} alt="" className="w-4 h-4 object-contain" />
                 {data.ctaLabel}
               </a>
             </div>
