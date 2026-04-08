@@ -3,11 +3,10 @@ import { Link } from "wouter";
 import logoImg from "@/assets/logo.png";
 import headerBtnIcon from "@/assets/Header_btn.png";
 
-const WP_API = "https://dev-fnpresswire.pantheonsite.io/wp-json/wp/v2";
+const WP_BASE = "https://dev-fnpresswire.pantheonsite.io/wp-json/wp/v2";
 
 interface NavLink { label: string; href: string; }
-
-const FALLBACK: {
+interface HData {
   navLinks: NavLink[];
   signInLabel: string;
   signInUrl: string;
@@ -15,7 +14,9 @@ const FALLBACK: {
   ctaUrl: string;
   logoUrl: string;
   ctaIcon: string;
-} = {
+}
+
+const FALLBACK: HData = {
   navLinks: [
     { label: "Platforms", href: "#platforms" },
     { label: "Solutions", href: "#solutions" },
@@ -31,37 +32,42 @@ const FALLBACK: {
   ctaIcon: headerBtnIcon,
 };
 
+async function getJson(url: string) {
+  const r = await fetch(url, { headers: { Accept: "application/json" } });
+  const text = await r.text();
+  // Guard: Pantheon sandbox sometimes returns HTML
+  if (!text.trim().startsWith("{") && !text.trim().startsWith("[")) return null;
+  return JSON.parse(text);
+}
+
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [hd, setHd] = useState(FALLBACK);
+  const [hd, setHd] = useState<HData>(FALLBACK);
 
   useEffect(() => {
-    fetch(`${WP_API}/pages/14`)
-      .then((r) => r.json())
-      .then(async (json) => {
-        const acf = json?.acf;
-        if (!acf) return;
+    (async () => {
+      try {
+        const json = await getJson(`${WP_BASE}/pages/14`);
+        if (!json?.acf) return;
+        const acf = json.acf;
 
+        // Nav links
         const navLinks: NavLink[] = Array.isArray(acf.menu)
-          ? acf.menu.map((n: any) => ({ label: n.heading || "", href: n.link || "#" }))
+          ? acf.menu.map((n: any) => ({ label: n.heading ?? "", href: n.link || "#" }))
           : FALLBACK.navLinks;
 
-        // logo is a media ID (number)
+        // Logo media
         let logoUrl = FALLBACK.logoUrl;
         if (typeof acf.logo === "number") {
-          try {
-            const m = await fetch(`${WP_API}/media/${acf.logo}`).then(r => r.json());
-            if (m?.source_url) logoUrl = m.source_url;
-          } catch {}
+          const m = await getJson(`${WP_BASE}/media/${acf.logo}`);
+          if (m?.source_url) logoUrl = m.source_url;
         }
 
-        // cta_button_icon is a media ID (number)
+        // CTA icon media
         let ctaIcon = FALLBACK.ctaIcon;
         if (typeof acf.cta_button_icon === "number") {
-          try {
-            const m = await fetch(`${WP_API}/media/${acf.cta_button_icon}`).then(r => r.json());
-            if (m?.source_url) ctaIcon = m.source_url;
-          } catch {}
+          const m = await getJson(`${WP_BASE}/media/${acf.cta_button_icon}`);
+          if (m?.source_url) ctaIcon = m.source_url;
         }
 
         setHd({
@@ -73,8 +79,10 @@ export default function Header() {
           logoUrl,
           ctaIcon,
         });
-      })
-      .catch((err) => console.error("Header API error:", err));
+      } catch (e) {
+        console.error("Header WP fetch failed:", e);
+      }
+    })();
   }, []);
 
   return (
