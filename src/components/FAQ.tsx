@@ -80,7 +80,7 @@ export default function FAQ() {
         </div>
 
         {/* Accordion */}
-        <div className="max-w-2xl mx-auto flex flex-col gap-3 mb-10">
+        <div className="max-w-3xl mx-auto flex flex-col gap-3 mb-10">
           {faqs.map((faq, i) => (
             <div key={i} className="bg-white rounded-xl overflow-hidden"
               style={{ border: "1px solid #e8ecf4", boxShadow: "0 1px 4px rgba(0,0,0,0.05)" }}>
