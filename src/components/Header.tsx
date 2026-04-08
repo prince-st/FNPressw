@@ -3,7 +3,7 @@ import { Link } from "wouter";
 import logoImg from "@/assets/logo.png";
 import headerBtnIcon from "@/assets/Header_btn.png";
 
-const API = "https://dev-fnpresswire.pantheonsite.io/wp-json/wp/v2/pages/14";
+const API = `https://dev-fnpresswire.pantheonsite.io/wp-json/wp/v2/pages/14?_=${Date.now()}`;
 const MEDIA = "https://dev-fnpresswire.pantheonsite.io/wp-json/wp/v2/media";
 
 interface NavLink { label: string; href: string; }
@@ -20,7 +20,7 @@ export default function Header() {
   const [ctaIcon, setCtaIcon] = useState(headerBtnIcon);
 
   useEffect(() => {
-    fetch(API)
+    fetch(API, { cache: "no-store" })
       .then(r => {
         if (!r.ok) throw new Error(`HTTP ${r.status}`);
         return r.json();

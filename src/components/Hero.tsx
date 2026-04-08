@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import heroImageFallback from "@/assets/hero-image.png";
 import shape1 from "@/assets/Shape_1.png";
 
-const API = "https://dev-fnpresswire.pantheonsite.io/wp-json/wp/v2/pages/10";
+const API = `https://dev-fnpresswire.pantheonsite.io/wp-json/wp/v2/pages/10?_=${Date.now()}`;
 const MEDIA = "https://dev-fnpresswire.pantheonsite.io/wp-json/wp/v2/media";
 
 async function mediaUrl(id: number): Promise<string | null> {
@@ -51,7 +51,7 @@ export default function Hero() {
   const [d, setD] = useState<HeroData>(FALLBACK);
 
   useEffect(() => {
-    fetch(API)
+    fetch(API, { cache: "no-store" })
       .then(r => r.json())
       .then(async (json) => {
         const acf = json?.acf;
