@@ -4,19 +4,14 @@ import logoImg from "@/assets/logo.png";
 import headerBtnIcon from "@/assets/Header_btn.png";
 
 const API = "https://dev-fnpresswire.pantheonsite.io/wp-json/wp/v2/pages/14";
-const MEDIA_API = "https://dev-fnpresswire.pantheonsite.io/wp-json/wp/v2/media";
+const MEDIA = "https://dev-fnpresswire.pantheonsite.io/wp-json/wp/v2/media";
 
 interface NavLink { label: string; href: string; }
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [navLinks, setNavLinks] = useState<NavLink[]>([
-    { label: "Platforms", href: "#platforms" },
-    { label: "Solutions", href: "#solutions" },
-    { label: "Partners", href: "#partners" },
-    { label: "Testimonials", href: "#testimonials" },
-    { label: "Pricing", href: "#pricing" },
-  ]);
+  const [ready, setReady] = useState(false);
+  const [navLinks, setNavLinks] = useState<NavLink[]>([]);
   const [signInLabel, setSignInLabel] = useState("Sign In");
   const [signInUrl, setSignInUrl] = useState("/Contact");
   const [ctaLabel, setCtaLabel] = useState("Get Started");
@@ -26,41 +21,67 @@ export default function Header() {
 
   useEffect(() => {
     fetch(API)
-      .then(r => r.json())
+      .then(r => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.json();
+      })
       .then(async data => {
         const acf = data?.acf;
-        if (!acf) return;
+        if (!acf) { setReady(true); return; }
 
-        if (Array.isArray(acf.menu)) {
+        // Nav links from repeater
+        if (Array.isArray(acf.menu) && acf.menu.length > 0) {
           setNavLinks(acf.menu.map((n: any) => ({
-            label: n.heading || "",
-            href: n.link || "#",
+            label: String(n.heading || ""),
+            href: String(n.link || "#"),
           })));
         }
 
-        if (acf.signin_text) setSignInLabel(acf.signin_text);
-        if (acf.signin_link) setSignInUrl(acf.signin_link);
-        if (acf.cta_text) setCtaLabel(acf.cta_text);
-        if (acf.cta_link) setCtaUrl(acf.cta_link);
+        setSignInLabel(String(acf.signin_text || "Sign In"));
+        setSignInUrl(String(acf.signin_link || "/Contact"));
+        setCtaLabel(String(acf.cta_text || "Get Started"));
+        setCtaUrl(String(acf.cta_link || "#"));
 
-        // Fetch logo image URL
-        if (acf.logo) {
-          fetch(`${MEDIA_API}/${acf.logo}`)
+        // Logo — media ID
+        if (acf.logo && typeof acf.logo === "number") {
+          fetch(`${MEDIA}/${acf.logo}`)
             .then(r => r.json())
             .then(m => { if (m?.source_url) setLogo(m.source_url); })
             .catch(() => {});
         }
 
-        // Fetch CTA icon URL
-        if (acf.cta_button_icon) {
-          fetch(`${MEDIA_API}/${acf.cta_button_icon}`)
+        // CTA icon — media ID
+        if (acf.cta_button_icon && typeof acf.cta_button_icon === "number") {
+          fetch(`${MEDIA}/${acf.cta_button_icon}`)
             .then(r => r.json())
             .then(m => { if (m?.source_url) setCtaIcon(m.source_url); })
             .catch(() => {});
         }
+
+        setReady(true);
       })
-      .catch(err => console.error("Header fetch error:", err));
+      .catch(err => {
+        console.error("WP Header fetch failed:", err);
+        // Use fallback nav on error
+        setNavLinks([
+          { label: "Platforms", href: "#platforms" },
+          { label: "Solutions", href: "#solutions" },
+          { label: "Partners", href: "#partners" },
+          { label: "Testimonials", href: "#testimonials" },
+          { label: "Pricing", href: "#pricing" },
+        ]);
+        setReady(true);
+      });
   }, []);
+
+  // Show fallback nav while loading
+  const displayNav = navLinks.length > 0 ? navLinks : [
+    { label: "Platforms", href: "#platforms" },
+    { label: "Solutions", href: "#solutions" },
+    { label: "Partners", href: "#partners" },
+    { label: "Testimonials", href: "#testimonials" },
+    { label: "Pricing", href: "#pricing" },
+  ];
 
   return (
     <header className="w-full bg-white sticky top-0 z-50 border-b border-gray-100 shadow-sm">
@@ -76,11 +97,11 @@ export default function Header() {
 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <Link key={link.label} href={link.href}
+            {displayNav.map((link) => (
+              <a key={link.label} href={link.href}
                 className="text-gray-600 hover:text-[#0030F0] font-medium text-sm transition-colors">
                 {link.label}
-              </Link>
+              </a>
             ))}
           </nav>
 
@@ -112,12 +133,12 @@ export default function Header() {
         {/* Mobile Menu */}
         {menuOpen && (
           <div className="lg:hidden border-t border-gray-100 py-4 flex flex-col gap-3">
-            {navLinks.map((link) => (
-              <Link key={link.label} href={link.href}
+            {displayNav.map((link) => (
+              <a key={link.label} href={link.href}
                 onClick={() => setMenuOpen(false)}
                 className="text-gray-700 font-medium text-sm px-2 py-1.5 hover:text-[#0030F0] transition-colors">
                 {link.label}
-              </Link>
+              </a>
             ))}
             <div className="flex items-center gap-4 pt-2 border-t border-gray-100 mt-1">
               <a href={signInUrl} className="text-[#0030F0] font-semibold text-sm">
