@@ -3,9 +3,8 @@ import { Link } from "wouter";
 import logoImg from "@/assets/logo.png";
 import headerBtnIcon from "@/assets/Header_btn.png";
 
-const WP_API = "https://dev-fnpresswire.pantheonsite.io/wp-json/wp/v2/pages/14";
+const WP_API = "https://dev-fnpresswire.pantheonsite.io/wp-json/wp/v2";
 
-// Fallback static data if API fails
 const fallbackNavLinks = [
   { label: "Platforms", href: "#platforms" },
   { label: "Solutions", href: "#solutions" },
@@ -15,52 +14,55 @@ const fallbackNavLinks = [
 ];
 
 interface NavLink { label: string; href: string; }
-interface HeaderData {
-  navLinks: NavLink[];
-  signInLabel: string;
-  signInUrl: string;
-  ctaLabel: string;
-  ctaUrl: string;
+
+async function fetchMediaUrl(id: number): Promise<string | null> {
+  try {
+    const r = await fetch(`${WP_API}/media/${id}`);
+    const j = await r.json();
+    return j?.source_url || null;
+  } catch { return null; }
 }
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [logoUrl, setLogoUrl] = useState<string>(logoImg);
-  const [ctaIcon, setCtaIcon] = useState<string>(headerBtnIcon);
-  const [data, setData] = useState<HeaderData>({
-    navLinks: fallbackNavLinks,
-    signInLabel: "Sign In",
-    signInUrl: "/Contact",
-    ctaLabel: "Get Started",
-    ctaUrl: "#",
-  });
+  const [navLinks, setNavLinks] = useState<NavLink[]>(fallbackNavLinks);
+  const [signInLabel, setSignInLabel] = useState("Sign In");
+  const [signInUrl, setSignInUrl] = useState("/Contact");
+  const [ctaLabel, setCtaLabel] = useState("Get Started");
+  const [ctaUrl, setCtaUrl] = useState("#");
+  const [logoUrl, setLogoUrl] = useState(logoImg);
+  const [ctaIcon, setCtaIcon] = useState(headerBtnIcon);
 
   useEffect(() => {
-    fetch(WP_API)
+    fetch(`${WP_API}/pages/14`)
       .then((r) => r.json())
-      .then((json) => {
+      .then(async (json) => {
         const acf = json?.acf;
         if (!acf) return;
-        setData({
-          // ACF repeater field: "menu", sub-fields: label + href
-          navLinks: Array.isArray(acf.menu)
-            ? acf.menu.map((n: any) => ({ label: n.label, href: n.href }))
-            : fallbackNavLinks,
-          signInLabel: acf.signin_text || "Sign In",
-          signInUrl: acf.signin_link || "/Contact",
-          ctaLabel: acf.cta_text || "Get Started",
-          ctaUrl: acf.cta_link || "#",
-        });
 
-        // Dynamic logo from ACF image field
-        if (acf.logo?.url) {
-          setLogoUrl(acf.logo.url);
-        } else if (acf.header_logo_url) {
-          setLogoUrl(acf.header_logo_url);
+        // Nav links — repeater uses "heading" and "link"
+        if (Array.isArray(acf.menu)) {
+          setNavLinks(acf.menu.map((n: any) => ({ label: n.heading, href: n.link || "#" })));
         }
 
-        // Dynamic CTA button icon
-        if (acf.cta_button_icon?.url) {
+        setSignInLabel(acf.signin_text || "Sign In");
+        setSignInUrl(acf.signin_link || "/Contact");
+        setCtaLabel(acf.cta_text || "Get Started");
+        setCtaUrl(acf.cta_link || "#");
+
+        // Logo — ACF returns media ID
+        if (typeof acf.logo === "number") {
+          const url = await fetchMediaUrl(acf.logo);
+          if (url) setLogoUrl(url);
+        } else if (acf.logo?.url) {
+          setLogoUrl(acf.logo.url);
+        }
+
+        // CTA icon — ACF returns media ID
+        if (typeof acf.cta_button_icon === "number") {
+          const url = await fetchMediaUrl(acf.cta_button_icon);
+          if (url) setCtaIcon(url);
+        } else if (acf.cta_button_icon?.url) {
           setCtaIcon(acf.cta_button_icon.url);
         }
       })
@@ -80,7 +82,7 @@ export default function Header() {
 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-8">
-            {data.navLinks.map((link) => (
+            {navLinks.map((link) => (
               <Link key={link.label} href={link.href}
                 className="text-gray-600 hover:text-[#0030F0] font-medium text-sm transition-colors">
                 {link.label}
@@ -90,12 +92,12 @@ export default function Header() {
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-5">
-            <Link href={data.signInUrl} className="text-[#0030F0] font-semibold text-sm hover:underline">
-              {data.signInLabel}
+            <Link href={signInUrl} className="text-[#0030F0] font-semibold text-sm hover:underline">
+              {signInLabel}
             </Link>
-            <a href={data.ctaUrl} className="fn-btn-primary px-6 py-2.5 text-sm flex items-center gap-2">
+            <a href={ctaUrl} className="fn-btn-primary px-6 py-2.5 text-sm flex items-center gap-2">
               <img src={ctaIcon} alt="" className="w-4 h-4 object-contain" />
-              {data.ctaLabel}
+              {ctaLabel}
             </a>
           </div>
 
@@ -116,7 +118,7 @@ export default function Header() {
         {/* Mobile Menu */}
         {menuOpen && (
           <div className="lg:hidden border-t border-gray-100 py-4 flex flex-col gap-3">
-            {data.navLinks.map((link) => (
+            {navLinks.map((link) => (
               <Link key={link.label} href={link.href}
                 onClick={() => setMenuOpen(false)}
                 className="text-gray-700 font-medium text-sm px-2 py-1.5 hover:text-[#0030F0] transition-colors">
@@ -124,12 +126,12 @@ export default function Header() {
               </Link>
             ))}
             <div className="flex items-center gap-4 pt-2 border-t border-gray-100 mt-1">
-              <Link href={data.signInUrl} className="text-[#0030F0] font-semibold text-sm">
-                {data.signInLabel}
+              <Link href={signInUrl} className="text-[#0030F0] font-semibold text-sm">
+                {signInLabel}
               </Link>
-              <a href={data.ctaUrl} className="fn-btn-primary px-5 py-2 text-sm flex items-center gap-2">
+              <a href={ctaUrl} className="fn-btn-primary px-5 py-2 text-sm flex items-center gap-2">
                 <img src={ctaIcon} alt="" className="w-4 h-4 object-contain" />
-                {data.ctaLabel}
+                {ctaLabel}
               </a>
             </div>
           </div>
