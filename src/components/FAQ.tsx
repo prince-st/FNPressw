@@ -61,7 +61,7 @@ export default function FAQ() {
         {/* Header */}
         <div className="text-center mb-10">
           {faqImage && (
-            <div className="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center mx-auto mb-4">
+            <div className="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center mx-auto mb-4 " style={{ background: "#0030F01A" }}>
               <img src={faqImage} alt="FAQ" className="w-16 h-16 object-contain" />
             </div>
           )}
