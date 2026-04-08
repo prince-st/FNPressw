@@ -79,7 +79,8 @@ function OutletCard({ outlet }: { outlet: MediaLogo }) {
 }
 
 export default function TrustedBy() {
-  const [sectionTitle, setSectionTitle] = useState("Trusted by Leading Media Outlets Worldwide");
+  const [mediaTitle, setMediaTitle] = useState("Trusted by Leading Media Outlets");
+  const [worldwideTitle, setWorldwideTitle] = useState("Worldwide");
   const [sectionSubtitle, setSectionSubtitle] = useState("Our platform connects your stories with top-tier journalists and publications across every industry.");
   const [mediaLogos, setMediaLogos] = useState<MediaLogo[]>(FALLBACK_LOGOS);
   const [stats, setStats] = useState<Stat[]>(FALLBACK_STATS);
@@ -92,7 +93,12 @@ export default function TrustedBy() {
         const acf = json?.acf;
         if (!acf) return;
 
-        if (acf.section_title) setSectionTitle(acf.section_title);
+        if (acf.media_title || acf.worldwide_title) {
+          const t = [acf.media_title, acf.worldwide_title].filter(Boolean).join(" ");
+          setSectionTitle(t);
+        } else if (acf.section_title) {
+          setSectionTitle(acf.section_title);
+        }
         if (acf.section_subtitle) setSectionSubtitle(acf.section_subtitle);
 
         // Media logos repeater: logo_text (abbr), media_name
