@@ -3,7 +3,7 @@ import { Link } from "wouter";
 import logoImg from "@/assets/logo.png";
 import headerBtnIcon from "@/assets/Header_btn.png";
 
-const WP_BASE = "https://dev-fnpresswire.pantheonsite.io/wp-json/wp/v2";
+const WP_BASE = "/wp-api";
 
 interface NavLink { label: string; href: string; }
 interface HData {
@@ -33,11 +33,8 @@ const FALLBACK: HData = {
 };
 
 async function getJson(url: string) {
-  const r = await fetch(url, { headers: { Accept: "application/json" } });
-  const text = await r.text();
-  // Guard: Pantheon sandbox sometimes returns HTML
-  if (!text.trim().startsWith("{") && !text.trim().startsWith("[")) return null;
-  return JSON.parse(text);
+  const r = await fetch(url);
+  return r.json();
 }
 
 export default function Header() {

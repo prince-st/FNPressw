@@ -1,5 +1,9 @@
 {
   "rewrites": [
+    {
+      "source": "/wp-api/:path*",
+      "destination": "https://dev-fnpresswire.pantheonsite.io/wp-json/wp/v2/:path*"
+    },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
