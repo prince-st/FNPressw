@@ -65,8 +65,8 @@ function PlatformCard({ icon, badge, title, description, features, learnMoreText
         <a href={learnMoreUrl}
           className="flex-1 py-2.5 px-5 rounded-xl font-semibold text-sm text-center flex items-center justify-center gap-2 transition-all"
           style={{ background: isLight ? "#0030F0" : "transparent", border: `1.5px solid ${isLight ? "#0030F0" : "rgba(255,255,255,0.5)"}`, color: "#fff" }}>
-          {learnMoreIcon && <img src={learnMoreIcon} alt="" className="w-4 h-4 object-contain" />}
           {learnMoreText}
+          {learnMoreIcon && <img src={learnMoreIcon} alt="" className="w-4 h-4 object-contain" />}
         </a>
         <a href={freeTrialUrl}
           className="flex-1 py-2.5 px-5 rounded-xl font-semibold text-sm text-center transition-all"
