@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import logoImg from "@/assets/logo.png";
 import headerBtnIcon from "@/assets/Header_btn.png";
 
-const navLinks = [
+const WP_API = "https://dev-fnpresswire.pantheonsite.io/wp-json/wp/v2/pages/14";
+
+// Fallback static data if API fails
+const fallbackNavLinks = [
   { label: "Platforms", href: "#platforms" },
   { label: "Solutions", href: "#solutions" },
   { label: "Partners", href: "#partners" },
@@ -11,8 +14,43 @@ const navLinks = [
   { label: "Pricing", href: "#pricing" },
 ];
 
+interface NavLink { label: string; href: string; }
+interface HeaderData {
+  navLinks: NavLink[];
+  signInLabel: string;
+  signInUrl: string;
+  ctaLabel: string;
+  ctaUrl: string;
+}
+
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [data, setData] = useState<HeaderData>({
+    navLinks: fallbackNavLinks,
+    signInLabel: "Sign In",
+    signInUrl: "/Contact",
+    ctaLabel: "Get Started",
+    ctaUrl: "#",
+  });
+
+  useEffect(() => {
+    fetch(WP_API)
+      .then((r) => r.json())
+      .then((json) => {
+        const acf = json?.acf;
+        if (!acf) return;
+        setData({
+          navLinks: Array.isArray(acf.nav_links)
+            ? acf.nav_links.map((n: any) => ({ label: n.label, href: n.href }))
+            : fallbackNavLinks,
+          signInLabel: acf.sign_in_label || "Sign In",
+          signInUrl: acf.sign_in_url || "/Contact",
+          ctaLabel: acf.cta_label || "Get Started",
+          ctaUrl: acf.cta_url || "#",
+        });
+      })
+      .catch(() => {/* keep fallback */});
+  }, []);
 
   return (
     <header className="w-full bg-white sticky top-0 z-50 border-b border-gray-100 shadow-sm">
@@ -27,7 +65,7 @@ export default function Header() {
 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) => (
+            {data.navLinks.map((link) => (
               <Link key={link.label} href={link.href}
                 className="text-gray-600 hover:text-[#0030F0] font-medium text-sm transition-colors">
                 {link.label}
@@ -37,10 +75,12 @@ export default function Header() {
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-5">
-            <Link href="/Contact" className="text-[#0030F0] font-semibold text-sm hover:underline">Sign In</Link>
-            <a href="#" className="fn-btn-primary px-6 py-2.5 text-sm flex items-center gap-2">
+            <Link href={data.signInUrl} className="text-[#0030F0] font-semibold text-sm hover:underline">
+              {data.signInLabel}
+            </Link>
+            <a href={data.ctaUrl} className="fn-btn-primary px-6 py-2.5 text-sm flex items-center gap-2">
               <img src={headerBtnIcon} alt="" className="w-4 h-4 object-contain" />
-              Get Started
+              {data.ctaLabel}
             </a>
           </div>
 
@@ -61,7 +101,7 @@ export default function Header() {
         {/* Mobile Menu */}
         {menuOpen && (
           <div className="lg:hidden border-t border-gray-100 py-4 flex flex-col gap-3">
-            {navLinks.map((link) => (
+            {data.navLinks.map((link) => (
               <Link key={link.label} href={link.href}
                 onClick={() => setMenuOpen(false)}
                 className="text-gray-700 font-medium text-sm px-2 py-1.5 hover:text-[#0030F0] transition-colors">
@@ -69,10 +109,12 @@ export default function Header() {
               </Link>
             ))}
             <div className="flex items-center gap-4 pt-2 border-t border-gray-100 mt-1">
-              <Link href="/Contact" className="text-[#0030F0] font-semibold text-sm">Sign In</Link>
-              <a href="#" className="fn-btn-primary px-5 py-2 text-sm flex items-center gap-2">
+              <Link href={data.signInUrl} className="text-[#0030F0] font-semibold text-sm">
+                {data.signInLabel}
+              </Link>
+              <a href={data.ctaUrl} className="fn-btn-primary px-5 py-2 text-sm flex items-center gap-2">
                 <img src={headerBtnIcon} alt="" className="w-4 h-4 object-contain" />
-                Get Started
+                {data.ctaLabel}
               </a>
             </div>
           </div>
