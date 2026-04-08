@@ -1,5 +1,5 @@
 
-import { AboutHero, Exchanges, Footer, Header, PremiumNews } from "@/components";
+import { AboutHero, Exchanges,  Header, PremiumNews } from "@/components";
 import ServicesGrid from "@/components/About/ServicesGrid";
 
 const Service = () => {
@@ -15,7 +15,7 @@ const Service = () => {
       <ServicesGrid />
       <Exchanges />
      <PremiumNews /> 
-      <Footer />
+      {/* <Footer /> */}
     </main>
   );
 };
