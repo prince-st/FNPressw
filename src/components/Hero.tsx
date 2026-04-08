@@ -116,7 +116,7 @@ export default function Hero() {
             <div className="flex flex-wrap items-center gap-4 mb-10">
               {/* Primary Button */}
               <a href={d.primaryBtnLink}
-                className="flex items-center gap-2 px-7 py-3 text-sm font-semibold rounded-md transition-all"
+                className="group flex items-center gap-2 px-7 py-3 text-sm font-semibold rounded-md transition-all duration-200"
                 style={{ background: "#fff", color: "#0030F0", border: "1.5px solid #0030F0" }}
                 onMouseEnter={e => {
                   (e.currentTarget as HTMLAnchorElement).style.background = "#0030F0";
@@ -127,25 +127,17 @@ export default function Hero() {
                   (e.currentTarget as HTMLAnchorElement).style.color = "#0030F0";
                 }}
               >
-                {d.primaryBtnIcon
-                  ? <img src={d.primaryBtnIcon} alt="" className="w-4 h-4 object-contain" />
-                  : <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
-                }
                 {d.primaryBtnText}
+                {d.primaryBtnIcon
+                  ? <img src={d.primaryBtnIcon} alt="" className="w-4 h-4 object-contain transition-transform duration-200 group-hover:translate-x-1" />
+                  : <svg className="transition-transform duration-200 group-hover:translate-x-1" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                }
               </a>
 
               {/* Secondary Button */}
               <a href={d.secondaryBtnLink}
-                className="flex items-center gap-2 font-semibold text-sm rounded-md px-4 py-3 transition-all"
-                style={{ background: "transparent", color: "#1a1a1a", border: "none" }}
-                onMouseEnter={e => {
-                  (e.currentTarget as HTMLAnchorElement).style.background = "#fff";
-                  (e.currentTarget as HTMLAnchorElement).style.color = "#0030F0";
-                }}
-                onMouseLeave={e => {
-                  (e.currentTarget as HTMLAnchorElement).style.background = "transparent";
-                  (e.currentTarget as HTMLAnchorElement).style.color = "#1a1a1a";
-                }}
+                className="group flex items-center gap-2 font-semibold text-sm rounded-md px-4 py-3 transition-all duration-200 hover:bg-white hover:text-[#0030F0]"
+                style={{ background: "transparent", color: "#1a1a1a" }}
               >
                 <div className="w-9 h-9 flex items-center justify-center">
                   <svg width="10" height="12" viewBox="0 0 10 12" fill="#0030F0">
