@@ -86,9 +86,9 @@ export default function Header() {
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-5">
-            <Link href={signInUrl} className="text-[#0030F0] font-semibold text-sm hover:underline">
+            <a href={signInUrl} className="text-[#0030F0] font-semibold text-sm hover:underline">
               {signInLabel}
-            </Link>
+            </a>
             <a href={ctaUrl} className="fn-btn-primary px-6 py-2.5 text-sm flex items-center gap-2">
               <img src={ctaIcon} alt="" className="w-4 h-4 object-contain" />
               {ctaLabel}
@@ -120,9 +120,9 @@ export default function Header() {
               </Link>
             ))}
             <div className="flex items-center gap-4 pt-2 border-t border-gray-100 mt-1">
-              <Link href={signInUrl} className="text-[#0030F0] font-semibold text-sm">
+              <a href={signInUrl} className="text-[#0030F0] font-semibold text-sm">
                 {signInLabel}
-              </Link>
+              </a>
               <a href={ctaUrl} className="fn-btn-primary px-5 py-2 text-sm flex items-center gap-2">
                 <img src={ctaIcon} alt="" className="w-4 h-4 object-contain" />
                 {ctaLabel}
