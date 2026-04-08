@@ -94,10 +94,11 @@ export default function TrustedBy() {
         if (!acf) return;
 
         if (acf.media_title || acf.worldwide_title) {
-          const t = [acf.media_title, acf.worldwide_title].filter(Boolean).join(" ");
-          setSectionTitle(t);
+          if (acf.media_title) setMediaTitle(acf.media_title);
+          if (acf.worldwide_title) setWorldwideTitle(acf.worldwide_title);
         } else if (acf.section_title) {
-          setSectionTitle(acf.section_title);
+          setMediaTitle(acf.section_title);
+          setWorldwideTitle("");
         }
         if (acf.section_subtitle) setSectionSubtitle(acf.section_subtitle);
 
@@ -160,7 +161,7 @@ export default function TrustedBy() {
           {/* Header */}
           <div className="text-center mb-12 pt-20">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight">
-              {sectionTitle}
+              {mediaTitle}<br />{worldwideTitle}
             </h2>
             <p className="text-blue-200 text-sm md:text-base leading-relaxed max-w-lg mx-auto">
               {sectionSubtitle}
