@@ -3,88 +3,63 @@ import { Link } from "wouter";
 import logoImg from "@/assets/logo.png";
 import headerBtnIcon from "@/assets/Header_btn.png";
 
-const WP_BASE = "https://dev-fnpresswire.pantheonsite.io/wp-json/wp/v2";
+const API = "https://dev-fnpresswire.pantheonsite.io/wp-json/wp/v2/pages/14";
+const MEDIA_API = "https://dev-fnpresswire.pantheonsite.io/wp-json/wp/v2/media";
 
 interface NavLink { label: string; href: string; }
-interface HData {
-  navLinks: NavLink[];
-  signInLabel: string;
-  signInUrl: string;
-  ctaLabel: string;
-  ctaUrl: string;
-  logoUrl: string;
-  ctaIcon: string;
-}
 
-const FALLBACK: HData = {
-  navLinks: [
+export default function Header() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [navLinks, setNavLinks] = useState<NavLink[]>([
     { label: "Platforms", href: "#platforms" },
     { label: "Solutions", href: "#solutions" },
     { label: "Partners", href: "#partners" },
     { label: "Testimonials", href: "#testimonials" },
     { label: "Pricing", href: "#pricing" },
-  ],
-  signInLabel: "Sign In",
-  signInUrl: "/Contact",
-  ctaLabel: "Get Started",
-  ctaUrl: "#",
-  logoUrl: logoImg,
-  ctaIcon: headerBtnIcon,
-};
-
-async function getJson(url: string) {
-  const r = await fetch(url, { mode: "cors", cache: "no-store" });
-  const text = await r.text();
-  if (!text.trim().startsWith("{") && !text.trim().startsWith("[")) {
-    console.error("Non-JSON response from:", url, text.substring(0, 100));
-    return null;
-  }
-  return JSON.parse(text);
-}
-
-export default function Header() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [hd, setHd] = useState<HData>(FALLBACK);
+  ]);
+  const [signInLabel, setSignInLabel] = useState("Sign In");
+  const [signInUrl, setSignInUrl] = useState("/Contact");
+  const [ctaLabel, setCtaLabel] = useState("Get Started");
+  const [ctaUrl, setCtaUrl] = useState("#");
+  const [logo, setLogo] = useState(logoImg);
+  const [ctaIcon, setCtaIcon] = useState(headerBtnIcon);
 
   useEffect(() => {
-    (async () => {
-      try {
-        const json = await getJson(`${WP_BASE}/pages/14`);
-        if (!json?.acf) return;
-        const acf = json.acf;
+    fetch(API)
+      .then(r => r.json())
+      .then(async data => {
+        const acf = data?.acf;
+        if (!acf) return;
 
-        // Nav links
-        const navLinks: NavLink[] = Array.isArray(acf.menu)
-          ? acf.menu.map((n: any) => ({ label: n.heading ?? "", href: n.link || "#" }))
-          : FALLBACK.navLinks;
-
-        // Logo media
-        let logoUrl = FALLBACK.logoUrl;
-        if (typeof acf.logo === "number") {
-          const m = await getJson(`${WP_BASE}/media/${acf.logo}`);
-          if (m?.source_url) logoUrl = m.source_url;
+        if (Array.isArray(acf.menu)) {
+          setNavLinks(acf.menu.map((n: any) => ({
+            label: n.heading || "",
+            href: n.link || "#",
+          })));
         }
 
-        // CTA icon media
-        let ctaIcon = FALLBACK.ctaIcon;
-        if (typeof acf.cta_button_icon === "number") {
-          const m = await getJson(`${WP_BASE}/media/${acf.cta_button_icon}`);
-          if (m?.source_url) ctaIcon = m.source_url;
+        if (acf.signin_text) setSignInLabel(acf.signin_text);
+        if (acf.signin_link) setSignInUrl(acf.signin_link);
+        if (acf.cta_text) setCtaLabel(acf.cta_text);
+        if (acf.cta_link) setCtaUrl(acf.cta_link);
+
+        // Fetch logo image URL
+        if (acf.logo) {
+          fetch(`${MEDIA_API}/${acf.logo}`)
+            .then(r => r.json())
+            .then(m => { if (m?.source_url) setLogo(m.source_url); })
+            .catch(() => {});
         }
 
-        setHd({
-          navLinks,
-          signInLabel: acf.signin_text || FALLBACK.signInLabel,
-          signInUrl: acf.signin_link || FALLBACK.signInUrl,
-          ctaLabel: acf.cta_text || FALLBACK.ctaLabel,
-          ctaUrl: acf.cta_link || FALLBACK.ctaUrl,
-          logoUrl,
-          ctaIcon,
-        });
-      } catch (e) {
-        console.error("Header WP fetch failed:", e);
-      }
-    })();
+        // Fetch CTA icon URL
+        if (acf.cta_button_icon) {
+          fetch(`${MEDIA_API}/${acf.cta_button_icon}`)
+            .then(r => r.json())
+            .then(m => { if (m?.source_url) setCtaIcon(m.source_url); })
+            .catch(() => {});
+        }
+      })
+      .catch(err => console.error("Header fetch error:", err));
   }, []);
 
   return (
@@ -95,13 +70,13 @@ export default function Header() {
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/">
-              <img src={hd.logoUrl} alt="FN Press Wire" className="h-8 md:h-10 w-auto object-contain cursor-pointer" />
+              <img src={logo} alt="FN Press Wire" className="h-8 md:h-10 w-auto object-contain cursor-pointer" />
             </Link>
           </div>
 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-8">
-            {hd.navLinks.map((link) => (
+            {navLinks.map((link) => (
               <Link key={link.label} href={link.href}
                 className="text-gray-600 hover:text-[#0030F0] font-medium text-sm transition-colors">
                 {link.label}
@@ -111,12 +86,12 @@ export default function Header() {
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-5">
-            <Link href={hd.signInUrl} className="text-[#0030F0] font-semibold text-sm hover:underline">
-              {hd.signInLabel}
+            <Link href={signInUrl} className="text-[#0030F0] font-semibold text-sm hover:underline">
+              {signInLabel}
             </Link>
-            <a href={hd.ctaUrl} className="fn-btn-primary px-6 py-2.5 text-sm flex items-center gap-2">
-              <img src={hd.ctaIcon} alt="" className="w-4 h-4 object-contain" />
-              {hd.ctaLabel}
+            <a href={ctaUrl} className="fn-btn-primary px-6 py-2.5 text-sm flex items-center gap-2">
+              <img src={ctaIcon} alt="" className="w-4 h-4 object-contain" />
+              {ctaLabel}
             </a>
           </div>
 
@@ -137,7 +112,7 @@ export default function Header() {
         {/* Mobile Menu */}
         {menuOpen && (
           <div className="lg:hidden border-t border-gray-100 py-4 flex flex-col gap-3">
-            {hd.navLinks.map((link) => (
+            {navLinks.map((link) => (
               <Link key={link.label} href={link.href}
                 onClick={() => setMenuOpen(false)}
                 className="text-gray-700 font-medium text-sm px-2 py-1.5 hover:text-[#0030F0] transition-colors">
@@ -145,12 +120,12 @@ export default function Header() {
               </Link>
             ))}
             <div className="flex items-center gap-4 pt-2 border-t border-gray-100 mt-1">
-              <Link href={hd.signInUrl} className="text-[#0030F0] font-semibold text-sm">
-                {hd.signInLabel}
+              <Link href={signInUrl} className="text-[#0030F0] font-semibold text-sm">
+                {signInLabel}
               </Link>
-              <a href={hd.ctaUrl} className="fn-btn-primary px-5 py-2 text-sm flex items-center gap-2">
-                <img src={hd.ctaIcon} alt="" className="w-4 h-4 object-contain" />
-                {hd.ctaLabel}
+              <a href={ctaUrl} className="fn-btn-primary px-5 py-2 text-sm flex items-center gap-2">
+                <img src={ctaIcon} alt="" className="w-4 h-4 object-contain" />
+                {ctaLabel}
               </a>
             </div>
           </div>
