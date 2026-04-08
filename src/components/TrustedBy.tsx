@@ -120,7 +120,10 @@ export default function TrustedBy() {
         }
 
         // Industry Recognition repeater: industry_point (image), text
-        const newRecognitions: Recognition[] = [...FALLBACK_RECOGNITIONS];
+        const newRecognitions: Recognition[] = [
+          { ...FALLBACK_RECOGNITIONS[0], items: [...FALLBACK_RECOGNITIONS[0].items] },
+          { ...FALLBACK_RECOGNITIONS[1], items: [...FALLBACK_RECOGNITIONS[1].items] },
+        ];
         if (Array.isArray(acf.industry_recognition) && acf.industry_recognition.length > 0) {
           newRecognitions[0] = {
             title: acf.industry_recognition_text || "Industry Recognition",
@@ -170,7 +173,7 @@ export default function TrustedBy() {
 
           {/* Media outlet grid */}
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3 mb-14">
-            {mediaLogos.map((outlet, i) => (
+            {mediaLogos.map((outlet: MediaLogo, i: number) => (
               <OutletCard key={i} outlet={outlet} />
             ))}
           </div>
