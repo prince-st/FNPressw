@@ -113,12 +113,20 @@ export default function Platforms() {
           })));
         }
 
-        // Stats — sub-fields: bottom_stats_image, number, label
+        // Stats repeater — sub-fields: bottom_stats_image, number, label
         if (Array.isArray(acf.stats) && acf.stats.length > 0) {
           setStats(acf.stats.map((s: any, i: number) => ({
             value: s.number || s.number_stat || "",
             label: s.label || "",
             icon: typeof s.bottom_stats_image === "string" ? s.bottom_stats_image : (s.bottom_stats_image?.url || FALLBACK_STATS[i]?.icon || ""),
+          })));
+        }
+        // Also check for trusted_counter (new field name)
+        if (Array.isArray(acf.trusted_counter) && acf.trusted_counter.length > 0) {
+          setStats(acf.trusted_counter.map((s: any, i: number) => ({
+            value: s.trusted_numbe || s.trusted_number || "",
+            label: s.trusted_title || "",
+            icon: typeof s.trusted_image === "string" ? s.trusted_image : (s.trusted_image?.url || FALLBACK_STATS[i]?.icon || ""),
           })));
         }
       })
