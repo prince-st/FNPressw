@@ -30,7 +30,6 @@ const OrderServicesForm = () => {
   const [tellUsMoreLabel, setTellUsMoreLabel] = useState("Tell Us More");
   const [tellUsMorePlaceholder, setTellUsMorePlaceholder] = useState("E.g. Pre-listing to list on OTCQB; require news feed setup.");
   const [submitText, setSubmitText] = useState("Submit");
-  const [submitLink, setSubmitLink] = useState("");
 
   useEffect(() => {
     fetch(API, { cache: "no-store" })
@@ -52,10 +51,17 @@ const OrderServicesForm = () => {
         if (acf.company_email) setCompanyEmailPlaceholder(acf.company_email);
         if (acf.publicly_traded) setPubliclyTradedLabel(acf.publicly_traded);
         if (acf.publicly_traded_yes_no) {
-          const opts = typeof acf.publicly_traded_yes_no === "string"
-            ? acf.publicly_traded_yes_no.split(",").map((s: string) => s.trim())
-            : Object.values(acf.publicly_traded_yes_no);
-          if (opts.length > 0) setPubliclyTradedOptions(opts as string[]);
+          try {
+            const raw = acf.publicly_traded_yes_no;
+            const opts = typeof raw === "string"
+              ? raw.split(",").map((s: string) => s.trim()).filter(Boolean)
+              : Array.isArray(raw)
+                ? raw
+                : typeof raw === "object"
+                  ? Object.keys(raw) // ACF select returns {value: label} — use keys
+                  : ["Yes", "No"];
+            if (opts.length > 0) setPubliclyTradedOptions(opts as string[]);
+          } catch { /* keep fallback */ }
         }
         if (acf.ticker_symbol) setTickerLabel(acf.ticker_symbol);
         if (acf.formet_ticker_symbol) setTickerPlaceholder(acf.formet_ticker_symbol);
