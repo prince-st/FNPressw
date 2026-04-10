@@ -20,9 +20,9 @@ export default function MarketingHero({
 }: Props) {
   const [heading, setHeading] = useState(fallbackTitle);
   const [description, setDescription] = useState(fallbackSubtitle);
-  const [btnText, setBtnText] = useState(fallbackBtnText);
-  const [btnLink, setBtnLink] = useState(fallbackBtnLink);
-  const [btnIcon, setBtnIcon] = useState("");
+  const [btnText, setBtnText] = useState("Contact Us Now");
+  const [btnLink, setBtnLink] = useState("https://fnpresswire.vercel.app/contact");
+  const [btnIcon, setBtnIcon] = useState("https://dev-fnpresswire.pantheonsite.io/wp-content/uploads/2026/04/SVG-2.png");
 
   useEffect(() => {
     if (!pageId) return;
