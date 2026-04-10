@@ -33,9 +33,12 @@ export default function MarketingHero({
         if (!acf) return;
         if (acf.distribute_heading) setHeading(acf.distribute_heading);
         if (acf.distribute_description) setDescription(acf.distribute_description);
-        if (acf.distribute_button_text) setBtnText(acf.distribute_button_text);
-        if (acf.distribute_button_link) setBtnLink(acf.distribute_button_link);
-        const img = acf.distribute_button_image;
+        // ACF field names have spaces: "distribute button_text" etc.
+        const bt = acf["distribute button_text"] || acf.distribute_button_text;
+        const bl = acf["distribute button_link"] || acf.distribute_button_link;
+        const img = acf["distribute button_image"] || acf.distribute_button_image;
+        if (bt) setBtnText(bt);
+        if (bl) setBtnLink(bl);
         if (img) setBtnIcon(typeof img === "string" ? img : (img?.url || ""));
       })
       .catch(err => console.error("MarketingHero fetch error:", err));
