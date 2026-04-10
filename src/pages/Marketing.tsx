@@ -38,6 +38,7 @@ function ImageSlider() {
 
 const Marketing = () => {
   const [sections, setSections] = useState(FALLBACK_SECTIONS);
+  const [sliderImgs, setSliderImgs] = useState<string[]>(sliderImages);
 
   useEffect(() => {
     fetch(API, { cache: "no-store" })
@@ -54,6 +55,14 @@ const Marketing = () => {
           }));
           setSections(parsed);
         }
+
+        // Slider images repeater: images[].marketing_image_s
+        if (Array.isArray(acf.images) && acf.images.length > 0) {
+          const imgs = acf.images
+            .map((item: any) => typeof item.marketing_image_s === "string" ? item.marketing_image_s : (item.marketing_image_s?.url || ""))
+            .filter(Boolean);
+          if (imgs.length > 0) setSliderImgs(imgs);
+        }
       })
       .catch(() => {});
   }, []);
@@ -65,7 +74,7 @@ const Marketing = () => {
       {sections.map((s, i) => (
         <MarketingSection key={i} title={s.title} description={s.description} image={s.image} imagePosition={s.imagePosition} />
       ))}
-      <ImageSlider />
+      <ImageSlider images={sliderImgs} />
       <Footer />
     </main>
   );
