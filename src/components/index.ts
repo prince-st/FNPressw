@@ -1,5 +1,6 @@
 
 export { default as AboutHero } from './AboutHero';
+export { default as ServiceHighlight } from './ServiceHighlight';
 export { default as Exchanges } from './Exchanges';
 export { default as FAQ } from './FAQ';
 export { default as Features } from './Features';
