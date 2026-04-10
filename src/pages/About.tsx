@@ -11,7 +11,7 @@ export default function About() {
     <div className="min-h-screen bg-white">
       <Header />
       <main>
-        <AboutHero />
+        <AboutHero pageId={328} />
         <MissionSection />
         {/* <ServicesGrid /> */}
         <GlobalNews />

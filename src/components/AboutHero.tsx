@@ -1,27 +1,48 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
-const API = `https://dev-fnpresswire.pantheonsite.io/wp-json/wp/v2/pages/328?acf_format=standard&_=${Date.now()}`;
+const WP_BASE = "https://dev-fnpresswire.pantheonsite.io/wp-json/wp/v2/pages";
 
-export default function AboutHero() {
-  const [heading, setHeading] = useState("Making an Impact Across the Globe");
-  const [description, setDescription] = useState("We believe in the power of stories to inspire, inform, and transform. By bridging the gap between communicators and their audiences, FN Presswire strives to be at the forefront of shaping a more informed and connected world.");
-  const [btnText, setBtnText] = useState("Distribute News →");
-  const [btnLink, setBtnLink] = useState("/Distribute");
+interface Props {
+  pageId?: number; // WP page ID to fetch from
+  // fallback static props (used if no pageId or fetch fails)
+  title?: string;
+  subtitle?: string;
+  buttonText?: string;
+  buttonLink?: string;
+}
+
+export default function AboutHero({
+  pageId,
+  title: fallbackTitle = "Making an Impact Across the Globe",
+  subtitle: fallbackSubtitle = "We believe in the power of stories to inspire, inform, and transform. By bridging the gap between communicators and their audiences, FN Presswire strives to be at the forefront of shaping a more informed and connected world.",
+  buttonText: fallbackBtnText = "Distribute News →",
+  buttonLink: fallbackBtnLink = "/Distribute",
+}: Props) {
+  const [heading, setHeading] = useState(fallbackTitle);
+  const [description, setDescription] = useState(fallbackSubtitle);
+  const [btnText, setBtnText] = useState(fallbackBtnText);
+  const [btnLink, setBtnLink] = useState(fallbackBtnLink);
 
   useEffect(() => {
-    fetch(API, { cache: "no-store" })
+    if (!pageId) return;
+    fetch(`${WP_BASE}/${pageId}?acf_format=standard&_=${Date.now()}`, { cache: "no-store" })
       .then(r => r.json())
       .then((json) => {
         const acf = json?.acf;
         if (!acf) return;
-        if (acf.about_banner_heading) setHeading(acf.about_banner_heading);
-        if (acf.about_banner_description) setDescription(acf.about_banner_description);
-        if (acf.about_banner_button_text) setBtnText(acf.about_banner_button_text);
-        if (acf.about_banner_button_link) setBtnLink(acf.about_banner_button_link);
+        // Support both field name conventions
+        const h = acf.heading || acf.about_banner_heading;
+        const d = acf.description || acf.about_banner_description;
+        const bt = acf.distribute_news_btn_text || acf.about_banner_button_text;
+        const bl = acf.distribute_news_link || acf.about_banner_button_link;
+        if (h) setHeading(h);
+        if (d) setDescription(d);
+        if (bt) setBtnText(bt);
+        if (bl) setBtnLink(bl);
       })
       .catch(err => console.error("AboutHero fetch error:", err));
-  }, []);
+  }, [pageId]);
 
   return (
     <section className="relative pt-20 pb-32 lg:pt-32 lg:pb-48 overflow-hidden bg-[#2d1ce2]">
