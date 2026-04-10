@@ -44,12 +44,7 @@ const Marketing = () => {
         buttonText="Contact Us Now"
       /> */}
 
-<MarketingHero
- title="Global Media & Marketing Solutions"
-        subtitle="From instant worldwide press release distribution to centralized media hubs, digital advertising, and SEO-driven content marketing — our integrated solutions ensure your brand reaches the right audience, at the right time, across the globe."
-        showButton={true}
-        buttonText="Contact Us Now"
-  />
+<MarketingHero pageId={517} />
    
 
       <MarketingSection
