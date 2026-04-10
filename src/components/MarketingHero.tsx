@@ -57,7 +57,9 @@ export default function MarketingHero({
           <p className="text-white/80 max-w-3xl mx-auto mb-10 text-lg lg:text-xl leading-relaxed">
             {description}
           </p>
-          <a href={btnLink} className="fn-btn-white group inline-flex items-center gap-2">
+          <a href={btnLink}
+            className="inline-flex items-center gap-2 px-8 py-3 rounded-xl font-semibold text-sm transition-all hover:opacity-90"
+            style={{ background: "#fff", color: "#0030F0" }}>
             {btnText}
             {btnIcon && <img src={btnIcon} alt="" className="w-4 h-4 object-contain" />}
           </a>
