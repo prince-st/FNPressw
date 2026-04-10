@@ -1,13 +1,13 @@
 
 import { AboutHero, Exchanges, Footer, Header, PremiumNews } from "@/components";
-import ServicesGrid from "@/components/About/ServicesGrid";
+import ServiceHighlight from "@/components/About/ServicesGrid";
 
 const Service = () => {
   return (
     <main>
       <Header />
       <AboutHero pageId={377} />
-      <ServicesGrid />
+      <ServiceHighlight />
       <Exchanges />
      <PremiumNews /> 
       <Footer />
