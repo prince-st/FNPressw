@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useLocation } from "wouter";
 
 const WP_BASE = "https://dev-fnpresswire.pantheonsite.io/wp-json/wp/v2/pages";
 
@@ -24,7 +25,24 @@ export default function MarketingHero({
   const [btnLink, setBtnLink] = useState("https://fnpresswire.vercel.app/contact");
   const [btnIcon, setBtnIcon] = useState("https://dev-fnpresswire.pantheonsite.io/wp-content/uploads/2026/04/SVG-2.png");
 
-  useEffect(() => {
+  const [, navigate] = useLocation();
+
+  const handleBtnClick = (e: React.MouseEvent) => {
+    if (!btnLink || btnLink === "#") return;
+    try {
+      const url = new URL(btnLink);
+      // Same origin — use client-side navigation
+      if (url.origin === window.location.origin) {
+        e.preventDefault();
+        navigate(url.pathname);
+      }
+      // External URL — let it open normally
+    } catch {
+      // Relative path
+      e.preventDefault();
+      navigate(btnLink);
+    }
+  };
     if (!pageId) return;
     fetch(`${WP_BASE}/${pageId}?acf_format=standard&_=${Date.now()}`, { cache: "no-store" })
       .then(r => r.json())
@@ -57,7 +75,7 @@ export default function MarketingHero({
           <p className="text-white/80 max-w-3xl mx-auto mb-10 text-lg lg:text-xl leading-relaxed">
             {description}
           </p>
-          <a href={btnLink}
+          <a href={btnLink} onClick={handleBtnClick}
             className="inline-flex items-center gap-2 px-8 py-3 rounded-xl font-semibold text-sm transition-all hover:opacity-90"
             style={{ background: "#fff", color: "#0030F0" }}>
             {btnText}
