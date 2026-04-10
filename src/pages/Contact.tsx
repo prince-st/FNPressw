@@ -14,7 +14,7 @@ const Contact = () => {
       .then((json) => {
         const acf = json?.acf;
         if (!acf) return;
-        if (acf["contact us_heading"] || acf.contact_us_heading) setHeading(acf["contact us_heading"] || acf.contact_us_heading);
+        if (acf["contact us_heading"] || acf.contact_us_heading || acf.contact_us_headin) setHeading(acf["contact us_heading"] || acf.contact_us_heading || acf.contact_us_headin);
         if (acf["contact _sub_heading"] || acf.contact_sub_heading) setSubHeading(acf["contact _sub_heading"] || acf.contact_sub_heading);
       })
       .catch(() => {});
