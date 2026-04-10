@@ -38,6 +38,9 @@ export default function MarketingHero({
         const img = acf["distribute button_image"] || acf.distribute_button_image || acf.marketing_button_image;
         if (acf.heading_marketing) setHeading(acf.heading_marketing);
         if (acf.description_marketing) setDescription(acf.description_marketing);
+        // Contact page fields (spaces in field names)
+        if (acf["contact us_heading"]) setHeading(acf["contact us_heading"]);
+        if (acf["contact _sub_heading"]) setDescription(acf["contact _sub_heading"]);
         if (bt) setBtnText(bt);
         if (bl) setBtnLink(bl);
         if (img) setBtnIcon(typeof img === "string" ? img : (img?.url || ""));
