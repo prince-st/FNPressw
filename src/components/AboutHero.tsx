@@ -41,7 +41,7 @@ export default function AboutHero({
         if (d) setDescription(d);
         if (bt) setBtnText(bt);
         if (bl) setBtnLink(bl);
-        const img = acf.distribute_news_image;
+        const img = acf.distribute_news_image || acf.button_image_about;
         if (img) setBtnIcon(typeof img === "string" ? img : (img?.url || ""));
       })
       .catch(err => console.error("AboutHero fetch error:", err));
