@@ -21,7 +21,7 @@ const FALLBACK_SECTIONS = [
   { title: "Media Website", description: "Utilize our dedicated team of network agencies to help build your brand. These certified Google and Bing accredited professionals can co-manage your online advertising.", image: mediaWebsite2Img, imagePosition: "right" as const },
 ];
 
-function ImageSlider() {
+function ImageSlider({ images }: { images: string[] }) {
   return (
     <section className="py-10" style={{ background: "#F6F6F9" }}>
       <div className="fn-container" style={{ overflow: "hidden" }}>
