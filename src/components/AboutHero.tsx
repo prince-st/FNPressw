@@ -23,6 +23,7 @@ export default function AboutHero({
   const [description, setDescription] = useState(fallbackSubtitle);
   const [btnText, setBtnText] = useState(fallbackBtnText);
   const [btnLink, setBtnLink] = useState(fallbackBtnLink);
+  const [btnIcon, setBtnIcon] = useState("");
 
   useEffect(() => {
     if (!pageId) return;
@@ -40,6 +41,8 @@ export default function AboutHero({
         if (d) setDescription(d);
         if (bt) setBtnText(bt);
         if (bl) setBtnLink(bl);
+        const img = acf.distribute_news_image;
+        if (img) setBtnIcon(typeof img === "string" ? img : (img?.url || ""));
       })
       .catch(err => console.error("AboutHero fetch error:", err));
   }, [pageId]);
@@ -57,8 +60,9 @@ export default function AboutHero({
           <p className="text-white/80 max-w-3xl mx-auto mb-10 text-lg lg:text-xl leading-relaxed">
             {description}
           </p>
-          <a href={btnLink} className="fn-btn-white group inline-flex items-center">
+          <a href={btnLink} className="fn-btn-white group inline-flex items-center gap-2">
             {btnText}
+            {btnIcon && <img src={btnIcon} alt="" className="w-4 h-4 object-contain" />}
           </a>
         </motion.div>
       </div>
