@@ -68,7 +68,6 @@ const OrderServicesForm = () => {
         if (acf.tell_us_more) setTellUsMoreLabel(acf.tell_us_more);
         if (acf.tell_us_more_info) setTellUsMorePlaceholder(acf.tell_us_more_info);
         if (acf.submit_text) setSubmitText(acf.submit_text);
-        if (acf.submit_link) setSubmitLink(acf.submit_link);
       })
       .catch(err => console.error("OrderServicesForm fetch error:", err));
   }, []);
