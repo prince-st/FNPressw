@@ -5,12 +5,7 @@ const Distribute = () => {
   return (
     <main>
       <Header />
-      <MarketingHero
-        title="Distribute News"
-        subtitle="Distribute your company news and materials in compliance with exchange rules."
-        showButton={true}
-        buttonText="Contact Us Now"
-      />
+      <MarketingHero pageId={454} />
       <OrderServicesForm />
       <Footer />
     </main>

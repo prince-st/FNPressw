@@ -1,54 +1,71 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
-interface AboutHeroProps {
+const WP_BASE = "https://dev-fnpresswire.pantheonsite.io/wp-json/wp/v2/pages";
+
+interface Props {
+  pageId?: number;
   title?: string;
   subtitle?: string;
-  showButton?: boolean;
   buttonText?: string;
+  buttonLink?: string;
 }
 
-export default function AboutHero({
-  title = "Making an Impact Across the Globe",
-  subtitle = "We believe in the power of stories to inspire, inform, and transform. By bridging the gap between communicators and their audiences, FN Presswire strives to be at the forefront of shaping a more informed and connected world.",
-  showButton = true,
-  buttonText = "Distribute News",
-}: AboutHeroProps) {
+export default function MarketingHero({
+  pageId,
+  title: fallbackTitle = "Making an Impact Across the Globe",
+  subtitle: fallbackSubtitle = "We believe in the power of stories to inspire, inform, and transform.",
+  buttonText: fallbackBtnText = "Contact Us Now",
+  buttonLink: fallbackBtnLink = "#",
+}: Props) {
+  const [heading, setHeading] = useState(fallbackTitle);
+  const [description, setDescription] = useState(fallbackSubtitle);
+  const [btnText, setBtnText] = useState(fallbackBtnText);
+  const [btnLink, setBtnLink] = useState(fallbackBtnLink);
+  const [btnIcon, setBtnIcon] = useState("");
+
+  useEffect(() => {
+    if (!pageId) return;
+    fetch(`${WP_BASE}/${pageId}?acf_format=standard&_=${Date.now()}`, { cache: "no-store" })
+      .then(r => r.json())
+      .then((json) => {
+        const acf = json?.acf;
+        if (!acf) return;
+        if (acf.distribute_heading) setHeading(acf.distribute_heading);
+        if (acf.distribute_description) setDescription(acf.distribute_description);
+        if (acf.distribute_button_text) setBtnText(acf.distribute_button_text);
+        if (acf.distribute_button_link) setBtnLink(acf.distribute_button_link);
+        const img = acf.distribute_button_image;
+        if (img) setBtnIcon(typeof img === "string" ? img : (img?.url || ""));
+      })
+      .catch(err => console.error("MarketingHero fetch error:", err));
+  }, [pageId]);
+
   return (
     <section className="relative pt-20 pb-32 lg:pt-32 lg:pb-48 overflow-hidden bg-[#2d1ce2]">
-      <div
-        className="absolute inset-0 z-0 opacity-80"
-        style={{
-          background: "radial-gradient(circle at 20% 30%, #5b45ff 0%, transparent 50%), radial-gradient(circle at 80% 70%, #8e2de2 0%, transparent 50%)",
-        }}
+      <div className="absolute inset-0 z-0 opacity-80"
+        style={{ background: "radial-gradient(circle at 20% 30%, #5b45ff 0%, transparent 50%), radial-gradient(circle at 80% 70%, #8e2de2 0%, transparent 50%)" }}
       />
       <div className="fn-container relative z-10 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
           <h1 className="text-white font-bold mb-6 tracking-tight leading-tight" style={{ fontSize: "clamp(32px, 5vw, 60px)" }}>
-            {title}
+            {heading}
           </h1>
           <p className="text-white/80 max-w-3xl mx-auto mb-10 text-lg lg:text-xl leading-relaxed">
-            {subtitle}
+            {description}
           </p>
-          {showButton && (
-            <button className="fn-btn-white group">
-              {buttonText}
-              <span className="inline-block ml-2 transition-transform group-hover:translate-x-1">→</span>
-            </button>
-          )}
-        </motion.div> 
+          <a href={btnLink} className="fn-btn-white group inline-flex items-center gap-2">
+            {btnText}
+            {btnIcon && <img src={btnIcon} alt="" className="w-4 h-4 object-contain" />}
+          </a>
+        </motion.div>
       </div>
 
-      {/* Wavy Bottom Divider */}
       <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none z-10">
         <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-full h-[60px] lg:h-[100px]" fill="#F6F6F9">
           <path d="M0,0 C150,90 400,0 600,60 C800,120 1050,30 1200,80 L1200,120 L0,120 Z" />
         </svg>
       </div>
-
     </section>
   );
 }
