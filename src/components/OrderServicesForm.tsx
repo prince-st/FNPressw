@@ -42,7 +42,7 @@ export default function OrderServicesForm() {
         // Service options from repeater
         if (Array.isArray(acf.services) && acf.services.length > 0) {
           const opts = acf.services
-            .map((s: any) => String(s.service_option || s.option || s || ""))
+            .map((s: any) => String(s.service_name_list || s.service_option || s.option || s || ""))
             .filter(Boolean);
           if (opts.length > 0) {
             setServiceOptions(opts);
