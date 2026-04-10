@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import { ContactForm, Footer, Header } from "@/components";
 import { motion } from "framer-motion";
 
-const API = `https://dev-fnpresswire.pantheonsite.io/wp-json/wp/v2/pages/575?acf_format=standard&_=${Date.now()}`;
+const API = "https://dev-fnpresswire.pantheonsite.io/wp-json/wp/v2/pages/575?acf_format=standard";
 
 const Contact = () => {
   const [heading, setHeading] = useState("Contact Us");
   const [subHeading, setSubHeading] = useState("Need Support? Fill out the contact form below for sales & support and we will be in touch shortly.");
 
   useEffect(() => {
-    fetch(API, { cache: "no-store" })
+    fetch(`${API}&_=${Date.now()}`, { cache: "no-store" })
       .then(r => r.json())
       .then((json) => {
         const acf = json?.acf;
