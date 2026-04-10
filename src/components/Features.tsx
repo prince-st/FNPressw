@@ -132,7 +132,7 @@ export default function Features() {
             <div key={i}
               className="group bg-white border border-gray-100 rounded-2xl p-7 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
             >
-              <div className="w-20 h-20 rounded-full flex items-center  mx-auto mb-5 bg-gray-100">
+              <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-5 bg-gray-100">
                 {card.icon && <img src={card.icon} className="w-7 h-7 object-contain" alt={card.title} />}
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-3">{card.title}</h3>
