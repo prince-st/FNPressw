@@ -26,7 +26,7 @@ function ImageSlider({ images }: { images: string[] }) {
     <section className="py-10" style={{ background: "#F6F6F9" }}>
       <div className="fn-container" style={{ overflow: "hidden" }}>
         <div className="animate-marquee" style={{ display: "flex", alignItems: "center", gap: "60px", width: "max-content" }}>
-          {[...sliderImages, ...sliderImages, ...sliderImages].map((img, i) => (
+          {[...images, ...images, ...images].map((img, i) => (
             <img key={i} src={img} alt={`media-${i}`}
               style={{ height: "60px", width: "auto", maxWidth: "140px", objectFit: "contain", flexShrink: 0 }} />
           ))}
