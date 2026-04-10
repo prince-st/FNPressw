@@ -16,33 +16,15 @@ export default function MarketingHero({
   pageId,
   title: fallbackTitle = "Making an Impact Across the Globe",
   subtitle: fallbackSubtitle = "We believe in the power of stories to inspire, inform, and transform.",
-  buttonText: fallbackBtnText = "Contact Us Now",
-  buttonLink: fallbackBtnLink = "#",
 }: Props) {
   const [heading, setHeading] = useState(fallbackTitle);
   const [description, setDescription] = useState(fallbackSubtitle);
   const [btnText, setBtnText] = useState("Contact Us Now");
   const [btnLink, setBtnLink] = useState("https://fnpresswire.vercel.app/contact");
   const [btnIcon, setBtnIcon] = useState("https://dev-fnpresswire.pantheonsite.io/wp-content/uploads/2026/04/SVG-2.png");
-
   const [, navigate] = useLocation();
 
-  const handleBtnClick = (e: React.MouseEvent) => {
-    if (!btnLink || btnLink === "#") return;
-    try {
-      const url = new URL(btnLink);
-      // Same origin — use client-side navigation
-      if (url.origin === window.location.origin) {
-        e.preventDefault();
-        navigate(url.pathname);
-      }
-      // External URL — let it open normally
-    } catch {
-      // Relative path
-      e.preventDefault();
-      navigate(btnLink);
-    }
-  };
+  useEffect(() => {
     if (!pageId) return;
     fetch(`${WP_BASE}/${pageId}?acf_format=standard&_=${Date.now()}`, { cache: "no-store" })
       .then(r => r.json())
@@ -51,7 +33,6 @@ export default function MarketingHero({
         if (!acf) return;
         if (acf.distribute_heading) setHeading(acf.distribute_heading);
         if (acf.distribute_description) setDescription(acf.distribute_description);
-        // ACF field names have spaces: "distribute button_text" etc.
         const bt = acf["distribute button_text"] || acf.distribute_button_text;
         const bl = acf["distribute button_link"] || acf.distribute_button_link;
         const img = acf["distribute button_image"] || acf.distribute_button_image;
@@ -61,6 +42,20 @@ export default function MarketingHero({
       })
       .catch(err => console.error("MarketingHero fetch error:", err));
   }, [pageId]);
+
+  const handleBtnClick = (e: React.MouseEvent) => {
+    if (!btnLink || btnLink === "#") return;
+    try {
+      const url = new URL(btnLink);
+      if (url.origin === window.location.origin) {
+        e.preventDefault();
+        navigate(url.pathname);
+      }
+    } catch {
+      e.preventDefault();
+      navigate(btnLink);
+    }
+  };
 
   return (
     <section className="relative pt-20 pb-32 lg:pt-32 lg:pb-48 overflow-hidden bg-[#2d1ce2]">
