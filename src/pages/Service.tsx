@@ -1,6 +1,6 @@
 
-import { AboutHero, Exchanges, Footer, Header, PremiumNews } from "@/components";
-import ServiceHighlight from "@/components/About/ServicesGrid";
+import { AboutHero, ServiceHighlight,Exchanges, Footer, Header, PremiumNews } from "@/components";
+// import ServiceHighlight from "@/components/About/ServicesGrid";
 
 const Service = () => {
   return (
