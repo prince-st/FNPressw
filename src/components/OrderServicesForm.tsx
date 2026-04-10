@@ -85,7 +85,6 @@ const OrderServicesForm = () => {
     e.preventDefault();
     const errs = validate();
     if (Object.keys(errs).length > 0) { setErrors(errs); return; }
-    if (submitLink) { window.location.href = submitLink; return; }
     setSubmitted(true);
   };
 
